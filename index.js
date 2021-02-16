@@ -4,6 +4,7 @@ const mongoose=require('mongoose');
 const cookieSession=require('cookie-session');
 //tell passport to make use of cookies
 const passport=require('passport');
+const bodyParser=require('body-parser');
 const keys=require('./config/keys');
 require('./models/User');
 require('./services/passport');
@@ -12,6 +13,8 @@ require('./services/passport');
 mongoose.connect(keys.mongoURI);
 
 const app = express();
+
+app.use(bodyParser.json());
 
 app.use(
     cookieSession({
@@ -24,6 +27,21 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
+
+if (process.env.NODE_ENV === 'production'){
+
+    //Express will serve up production assets (FILES!!!!! main.js, main.css)
+    app.use(express.static('client/build'));
+
+    /*Express will serve up index html if doesn't recognize the file. It is decided by operation order.. Is there a file? Is there a routeHandler? Ok then handle the index.html*/
+    
+    const path=require('path');
+    app.get('*', (req,res)=>{
+        res.send(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+
+}
 
 
 const PORT = process.env.PORT || 5000;
