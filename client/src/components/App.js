@@ -5,9 +5,11 @@ import * as actions from '../actions';
 
 import Header from '../components/Header';
 import Landing from '../components/Landing';
+import Dashboard from '../components/Dashboard';
+import SurveyNew from '../components/surveys/SurveyNew';
 
-const Dashboard=()=><h2>Dashboard</h2>
-const SurveyNew=()=><h2>SurveyNew</h2>
+
+
 
 
 class App extends React.Component{
@@ -20,7 +22,7 @@ class App extends React.Component{
         return(
             <div className="container">
                 <BrowserRouter>
-                    <div>
+                    <div className="container">
                         <Header/>
                         <Route path="/" exact component={Landing}/>
                         <Route path="/surveys" exact component={Dashboard}/>
