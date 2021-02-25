@@ -1,13 +1,33 @@
 import React from "react";
+import Modal from "../Modal";
 import { connect } from "react-redux";
 import { fetchSurveys } from "../../actions";
 
 class SurveyList extends React.Component {
+	constructor() {
+		super();
+		this.state = { show: false, selectedSurvey: null };
+		this.showModal = this.showModal.bind(this);
+		this.hideModal = this.hideModal.bind(this);
+	}
+
+	showModal = (id) => {
+		this.setState({ show: true });
+		this.setState({ selectedSurvey: id });
+		console.log(this.state.selectedSurvey);
+	};
+
+	hideModal = () => {
+		this.setState({ show: false });
+	};
+
 	componentDidMount() {
 		this.props.fetchSurveys();
+		console.log(this.state);
 	}
 
 	renderSurveys() {
+		//Fix reverse on showModalClick or maybe it's a feature
 		return this.props.surveys.reverse().map((survey) => {
 			return (
 				<div className="card blue-grey darken-1" key={survey._id}>
@@ -21,6 +41,12 @@ class SurveyList extends React.Component {
 					<div className="card-action">
 						<a>Yes: {survey.yes}</a>
 						<a>No: {survey.no}</a>
+						<button
+							className="btn right"
+							onClick={() => this.showModal(survey._id)}
+						>
+							Delete
+						</button>
 					</div>
 				</div>
 			);
@@ -28,7 +54,19 @@ class SurveyList extends React.Component {
 	}
 
 	render() {
-		return <div>{this.renderSurveys()}</div>;
+		return (
+			<main>
+				<Modal
+					show={this.state.show}
+					handleClose={this.hideModal}
+					handleConfirm={`/api/surveys/delete/${this.state.selectedSurvey}`}
+				>
+					<h1>Delete Survey</h1>
+					<p>Are you sure you want to delete this survey?</p>
+				</Modal>
+				{this.renderSurveys()}
+			</main>
+		);
 	}
 }
 
