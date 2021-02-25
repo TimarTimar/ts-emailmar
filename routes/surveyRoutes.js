@@ -12,7 +12,7 @@ const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 const Survey = mongoose.model("surveys");
 
 module.exports = (app) => {
-	app.all("/api/surveys/delete/:surveyId", requireLogin, async (req, res) => {
+	app.all("/api/delete_survey/:surveyId", requireLogin, async (req, res) => {
 		const surveyId = req.param("surveyId");
 		await Survey.findByIdAndRemove(surveyId, () => {
 			console.log("deleted");

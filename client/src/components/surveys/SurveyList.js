@@ -6,19 +6,19 @@ import { fetchSurveys } from "../../actions";
 class SurveyList extends React.Component {
 	constructor() {
 		super();
-		this.state = { show: false, selectedSurvey: null };
+		this.state = { isOpen: false, selectedSurvey: null };
 		this.showModal = this.showModal.bind(this);
 		this.hideModal = this.hideModal.bind(this);
 	}
 
 	showModal = (id) => {
-		this.setState({ show: true });
+		this.setState({ isOpen: true });
 		this.setState({ selectedSurvey: id });
 		console.log(this.state.selectedSurvey);
 	};
 
 	hideModal = () => {
-		this.setState({ show: false });
+		this.setState({ isOpen: false });
 	};
 
 	componentDidMount() {
@@ -57,9 +57,9 @@ class SurveyList extends React.Component {
 		return (
 			<main>
 				<Modal
-					show={this.state.show}
-					handleClose={this.hideModal}
-					handleConfirm={`/api/surveys/delete/${this.state.selectedSurvey}`}
+					open={this.state.isOpen}
+					onClose={this.hideModal}
+					handleConfirm={`/api/delete_survey/${this.state.selectedSurvey}`}
 				>
 					<h1>Delete Survey</h1>
 					<p>Are you sure you want to delete this survey?</p>
