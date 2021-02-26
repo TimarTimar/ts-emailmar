@@ -1,4 +1,4 @@
-import { FETCH_SURVEYS, DELETE_SURVEY } from "../actions/types";
+import { FETCH_SURVEYS } from "../actions/types";
 
 const surveysReducer = (state = [], action) => {
 	switch (action.type) {
