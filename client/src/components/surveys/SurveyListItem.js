@@ -11,9 +11,13 @@ const SurveyListItem = ({
 	showModal,
 	filter,
 }) => {
-	const renderSendButton = () => {
+	const renderSendButton = (surveyId) => {
 		if (state === "draft") {
-			return <button className="btn red">Send</button>;
+			return (
+				<a className="btn red" href={`/api/send_survey/${surveyId}`}>
+					Send
+				</a>
+			);
 		}
 	};
 
@@ -31,7 +35,7 @@ const SurveyListItem = ({
 			<div className="card-action">
 				<a>Yes: {yes}</a>
 				<a>No: {no}</a>
-				{renderSendButton()}
+				{renderSendButton(_id)}
 				<button className="btn right" onClick={() => showModal(_id)}>
 					Delete
 				</button>

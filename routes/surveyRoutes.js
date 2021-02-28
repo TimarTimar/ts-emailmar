@@ -7,6 +7,8 @@ const requireLogin = require("../middlewares/requireLogin");
 const requireCredits = require("../middlewares/requireCredits");
 const Mailer = require("../services/Mailer");
 const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
+const { response } = require("express");
+const { filter } = require("lodash");
 
 //we got the Class
 const Survey = mongoose.model("surveys");
@@ -81,6 +83,30 @@ module.exports = (app) => {
 		await survey.save();
 		res.redirect("/surveys");
 	});
+
+	app.get(
+		"/api/send_survey/:surveyId",
+		requireLogin,
+		requireCredits,
+		async (req, res) => {
+			const surveyId = req.param("surveyId");
+			const filter = { _id: surveyId };
+			const update = { state: "sent", dateSent: Date.now() };
+			const response = await Survey.findOneAndUpdate(filter, update);
+
+			//attempt to Send
+			const mailer = new Mailer(response, surveyTemplate(response));
+
+			try {
+				await mailer.send();
+				req.user.credits -= 1;
+				const user = await req.user.save();
+				res.send(user);
+			} catch (err) {
+				res.status(422).send(err);
+			}
+		}
+	);
 
 	app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
 		const { title, subject, body, recipients } = req.body;
