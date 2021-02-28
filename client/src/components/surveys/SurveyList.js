@@ -3,7 +3,6 @@ import Modal from "../Modal";
 import { connect } from "react-redux";
 import { fetchSurveys } from "../../actions";
 import SurveyListItem from "./SurveyListItem";
-import { filter } from "lodash";
 
 class SurveyList extends React.Component {
 	constructor() {
@@ -38,7 +37,6 @@ class SurveyList extends React.Component {
 	}
 
 	renderFilterSelection() {
-		const message = "You selected " + this.state.filter;
 		return (
 			<div>
 				<select
@@ -50,7 +48,6 @@ class SurveyList extends React.Component {
 					<option value="sent">Sent surveys</option>
 					<option value="draft">Draft surveys</option>
 				</select>
-				<p>{message}</p>
 			</div>
 		);
 	}
