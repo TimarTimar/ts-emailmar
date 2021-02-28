@@ -12,12 +12,16 @@ const SurveyListItem = ({
 	filter,
 }) => {
 	const renderSendButton = () => {
-		if (filter === "draft") {
+		if (state === "draft") {
 			return <button className="btn red">Send</button>;
 		}
 	};
+
+	const cardBgColor = (surveyState) => {
+		return surveyState === "draft" ? "purple" : "blue-grey";
+	};
 	return (
-		<div className="card blue-grey darken-1">
+		<div className={`card ${cardBgColor(state)} darken-1`}>
 			<div className="card-content white-text">
 				<span>{state}</span>
 				<span className="card-title">{title}</span>
