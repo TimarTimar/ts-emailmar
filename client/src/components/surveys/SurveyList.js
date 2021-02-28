@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import { connect } from "react-redux";
 import { fetchSurveys } from "../../actions";
 import SurveyListItem from "./SurveyListItem";
+import { filter } from "lodash";
 
 class SurveyList extends React.Component {
 	constructor() {
@@ -11,10 +12,16 @@ class SurveyList extends React.Component {
 			isOpen: false,
 			selectedSurvey: null,
 			sort: "asc",
+			filter: "sent-draft",
 		};
 		this.showModal = this.showModal.bind(this);
 		this.hideModal = this.hideModal.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
+
+	handleChange = (e) => {
+		this.setState({ filter: e.target.value });
+	};
 
 	showModal = (id) => {
 		this.setState({ isOpen: true });
@@ -30,6 +37,23 @@ class SurveyList extends React.Component {
 		console.log(this.state);
 	}
 
+	renderFilterSelection() {
+		const message = "You selected " + this.state.filter;
+		return (
+			<div>
+				<select
+					className="browser-default"
+					value={this.state.filter}
+					onChange={this.handleChange}
+				>
+					<option value="sent-draft">All surveys</option>
+					<option value="sent">Sent surveys</option>
+					<option value="draft">Draft surveys</option>
+				</select>
+				<p>{message}</p>
+			</div>
+		);
+	}
 	renderOrderByDateButton() {
 		return (
 			<div
@@ -72,25 +96,30 @@ class SurveyList extends React.Component {
 			});
 		}
 
-		return surveyArray.map((survey) => {
-			return (
-				<SurveyListItem
-					_id={survey._id}
-					state={survey.state}
-					title={survey.title}
-					dateSent={survey.dateSent}
-					body={survey.body}
-					yes={survey.yes}
-					no={survey.no}
-					showModal={this.showModal}
-				/>
-			);
-		});
+		return surveyArray
+			.filter((survey) => this.state.filter.includes(survey.state))
+			.map((survey) => {
+				return (
+					<SurveyListItem
+						key={survey._id}
+						_id={survey._id}
+						state={survey.state}
+						title={survey.title}
+						dateSent={survey.dateSent}
+						body={survey.body}
+						yes={survey.yes}
+						no={survey.no}
+						filter={this.state.filter}
+						showModal={this.showModal}
+					/>
+				);
+			});
 	}
 
 	render() {
 		return (
 			<main>
+				{this.renderFilterSelection()}
 				{this.renderOrderByDateButton()}
 				<Modal
 					open={this.state.isOpen}

@@ -9,9 +9,15 @@ const SurveyListItem = ({
 	yes,
 	no,
 	showModal,
+	filter,
 }) => {
+	const renderSendButton = () => {
+		if (filter === "draft") {
+			return <button className="btn red">Send</button>;
+		}
+	};
 	return (
-		<div className="card blue-grey darken-1" key={_id}>
+		<div className="card blue-grey darken-1">
 			<div className="card-content white-text">
 				<span>{state}</span>
 				<span className="card-title">{title}</span>
@@ -21,6 +27,7 @@ const SurveyListItem = ({
 			<div className="card-action">
 				<a>Yes: {yes}</a>
 				<a>No: {no}</a>
+				{renderSendButton()}
 				<button className="btn right" onClick={() => showModal(_id)}>
 					Delete
 				</button>
