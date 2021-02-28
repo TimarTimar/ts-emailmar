@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "../Modal";
 import { connect } from "react-redux";
 import { fetchSurveys } from "../../actions";
+import SurveyListItem from "./SurveyListItem";
 
 class SurveyList extends React.Component {
 	constructor() {
@@ -73,25 +74,16 @@ class SurveyList extends React.Component {
 
 		return surveyArray.map((survey) => {
 			return (
-				<div className="card blue-grey darken-1" key={survey._id}>
-					<div className="card-content white-text">
-						<span className="card-title">{survey.title}</span>
-						<p>{survey.body}</p>
-						<p>
-							Sent on: {new Date(survey.dateSent).toLocaleDateString("ko-KR")}
-						</p>
-					</div>
-					<div className="card-action">
-						<a>Yes: {survey.yes}</a>
-						<a>No: {survey.no}</a>
-						<button
-							className="btn right"
-							onClick={() => this.showModal(survey._id)}
-						>
-							Delete
-						</button>
-					</div>
-				</div>
+				<SurveyListItem
+					_id={survey._id}
+					state={survey.state}
+					title={survey.title}
+					dateSent={survey.dateSent}
+					body={survey.body}
+					yes={survey.yes}
+					no={survey.no}
+					showModal={this.showModal}
+				/>
 			);
 		});
 	}

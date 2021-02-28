@@ -66,6 +66,22 @@ module.exports = (app) => {
 		res.send({});
 	});
 
+	app.get("/api/save_as_draft", requireLogin, async (req, res) => {
+		const { title, subject, body, recipients } = req.body;
+		const survey = new Survey({
+			title,
+			subject,
+			body,
+			recipients: recipients
+				.split(",")
+				.map((email) => ({ email: email.trim() })),
+			_user: req.user.id,
+		});
+
+		await survey.save();
+		res.redirect("/surveys");
+	});
+
 	app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
 		const { title, subject, body, recipients } = req.body;
 
@@ -77,6 +93,7 @@ module.exports = (app) => {
 				.split(",")
 				.map((email) => ({ email: email.trim() })),
 			_user: req.user.id,
+			state: "sent",
 			dateSent: Date.now(),
 		});
 
