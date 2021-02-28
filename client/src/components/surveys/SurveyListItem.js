@@ -11,31 +11,39 @@ const SurveyListItem = ({
 	showModal,
 	filter,
 }) => {
-	const renderSendButton = (surveyId) => {
-		if (state === "draft") {
-			return (
-				<a className="btn red" href={`/api/send_survey/${surveyId}`}>
-					Send
-				</a>
-			);
-		}
+	const conditionalDraftRendering = (_id, state) => {
+		return {
+			renderSendButton:
+				state === "draft" ? (
+					<a className="btn red" href={`/api/send_survey/${_id}`}>
+						Send
+					</a>
+				) : null,
+			cardBgColor: state === "draft" ? "purple" : "blue-grey",
+			stateIconName: state === "draft" ? "drafts" : "email",
+		};
 	};
 
-	const cardBgColor = (surveyState) => {
-		return surveyState === "draft" ? "purple" : "blue-grey";
-	};
 	return (
-		<div className={`card ${cardBgColor(state)} darken-1`}>
+		<div
+			className={`card ${
+				conditionalDraftRendering(_id, state).cardBgColor
+			} darken-1`}
+		>
 			<div className="card-content white-text">
-				<span>{state}</span>
-				<span className="card-title">{title}</span>
+				<span className="card-title">
+					{title}{" "}
+					<i className="medium material-icons right">
+						{conditionalDraftRendering(_id, state).stateIconName}
+					</i>
+				</span>
 				<p>{body}</p>
 				<p>Sent on: {new Date(dateSent).toLocaleDateString("ko-KR")}</p>
 			</div>
 			<div className="card-action">
 				<a>Yes: {yes}</a>
 				<a>No: {no}</a>
-				{renderSendButton(_id)}
+				{conditionalDraftRendering(_id, state).renderSendButton}
 				<button className="btn right" onClick={() => showModal(_id)}>
 					Delete
 				</button>
