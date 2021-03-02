@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SurveyListItem = ({
 	_id,
@@ -9,7 +10,6 @@ const SurveyListItem = ({
 	yes,
 	no,
 	showModal,
-	filter,
 }) => {
 	const conditionalDraftRendering = (_id, state) => {
 		return {
@@ -18,6 +18,12 @@ const SurveyListItem = ({
 					<a className="btn red" href={`/api/send_survey/${_id}`}>
 						Send
 					</a>
+				) : null,
+			renderEditButton:
+				state === "draft" ? (
+					<Link to={`/edit_survey/${_id}`} className="yellow btn darken-4">
+						Edit
+					</Link>
 				) : null,
 			cardBgColor: state === "draft" ? "purple" : "blue-grey",
 			stateIconName: state === "draft" ? "drafts" : "email",
@@ -43,6 +49,7 @@ const SurveyListItem = ({
 			<div className="card-action">
 				<a>Yes: {yes}</a>
 				<a>No: {no}</a>
+				{conditionalDraftRendering(_id, state).renderEditButton}
 				{conditionalDraftRendering(_id, state).renderSendButton}
 				<button className="btn right" onClick={() => showModal(_id)}>
 					Delete

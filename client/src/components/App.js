@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Landing from "../components/Landing";
 import Dashboard from "../components/Dashboard";
 import SurveyNew from "../components/surveys/SurveyNew";
+import SurveyListItemEdit from "../components/surveys/SurveyListItemEdit";
 
 class App extends React.Component {
 	componentDidMount() {
@@ -22,6 +23,10 @@ class App extends React.Component {
 						<Route path="/" exact component={Landing} />
 						<Route path="/surveys" exact component={Dashboard} />
 						<Route path="/surveys/new" component={SurveyNew} />
+						<Route
+							path="/edit_survey/:surveyId"
+							component={SurveyListItemEdit}
+						/>
 					</div>
 				</BrowserRouter>
 			</div>
