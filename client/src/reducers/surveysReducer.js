@@ -5,9 +5,7 @@ const surveysReducer = (state = [], action) => {
 		case FETCH_SURVEYS:
 			return action.payload;
 		case FETCH_SURVEY:
-			const newState = state.map((survey) => {
-				return survey._id == action.payload._id ? action.payload : survey;
-			});
+			const newState = [action.payload];
 			return newState;
 		default:
 			return state;
