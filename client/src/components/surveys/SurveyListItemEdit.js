@@ -1,10 +1,14 @@
 import _ from "lodash";
 import React from "react";
-import { reduxForm } from "redux-form";
+import { fetchSurvey } from "../../actions/index";
 import SurveyForm from "./SurveyForm";
 import { connect } from "react-redux";
 
 class SurveyListItemEdit extends React.Component {
+	componentDidMount() {
+		const surveyId = this.props.match.params.surveyId;
+		const survey = this.props.fetchSurvey(surveyId);
+	}
 	render() {
 		return (
 			<div>
@@ -13,14 +17,13 @@ class SurveyListItemEdit extends React.Component {
 						console.log(this.props);
 					}}
 				/>
-				<p>{JSON.stringify(this.props)}</p>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = ({ surveys }, ownProps) => {
-	return { surveys };
+const mapStateToProps = (state) => {
+	return { surveys: state.surveys };
 };
 
-export default connect(mapStateToProps)(SurveyListItemEdit);
+export default connect(mapStateToProps, { fetchSurvey })(SurveyListItemEdit);

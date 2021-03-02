@@ -68,6 +68,12 @@ module.exports = (app) => {
 		res.send({});
 	});
 
+	app.get("/api/edit_survey/:surveyId", requireLogin, async (req, res) => {
+		const surveyId = req.param("surveyId");
+		const response = await Survey.findOne({ _id: surveyId }).exec();
+		res.send(response);
+	});
+
 	app.all("/api/save_as_draft", requireLogin, async (req, res, next) => {
 		const { title, subject, body, recipients } = req.body;
 
