@@ -20,7 +20,7 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey, history }) => {
 
 	const saveAsDraft = async (formValues) => {
 		await axios.post("/api/save_as_draft", formValues);
-		console.log("it worked?");
+		window.location = "/surveys";
 	};
 
 	return (

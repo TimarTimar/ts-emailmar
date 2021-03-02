@@ -68,8 +68,9 @@ module.exports = (app) => {
 		res.send({});
 	});
 
-	app.get("/api/save_as_draft", requireLogin, async (req, res) => {
+	app.all("/api/save_as_draft", requireLogin, async (req, res, next) => {
 		const { title, subject, body, recipients } = req.body;
+
 		const survey = new Survey({
 			title,
 			subject,
@@ -80,7 +81,12 @@ module.exports = (app) => {
 			_user: req.user.id,
 		});
 
-		await survey.save();
+		try {
+			await survey.save();
+			res.send(survey);
+		} catch (err) {
+			res.status(500).send(err);
+		}
 		res.redirect("/surveys");
 	});
 
