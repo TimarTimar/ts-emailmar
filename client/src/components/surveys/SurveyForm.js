@@ -25,14 +25,20 @@ class SurveyForm extends React.Component {
 	render() {
 		return (
 			<div>
-				<form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
+				<form
+					onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
+					submitButtonName={this.props.submitButtonName}
+					submitButtonIconName={this.props.submitButtonIconName}
+				>
 					{this.renderFields()}
 					<Link to="/surveys" className="red btn-flat white-text">
 						Cancel
 					</Link>
 					<button className="teal btn-flat right white-text" type="submit">
-						Continue
-						<i className="material-icons right">arrow_forward</i>
+						{this.props.submitButtonName}
+						<i className="material-icons right">
+							{this.props.submitButtonIconName}
+						</i>
 					</button>
 				</form>
 			</div>
