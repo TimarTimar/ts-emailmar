@@ -29,6 +29,7 @@ class SurveyForm extends React.Component {
 					onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
 					submitbuttonname={this.props.submitbuttonname}
 					submitbuttoniconname={this.props.submitbuttoniconname}
+					onsaveasdraft={this.props.onsaveasdraft}
 				>
 					<div>{this.renderFields()}</div>
 					<div
@@ -43,10 +44,7 @@ class SurveyForm extends React.Component {
 						<Link to="/surveys" className="red btn-flat white-text">
 							Cancel
 						</Link>
-						<button
-							className="btn purple"
-							onClick={() => console.log(FormData)}
-						>
+						<button className="btn purple" onClick={this.props.onsaveasdraft}>
 							Save As Draft
 						</button>
 						<button className="teal btn-flat right white-text" type="submit">
