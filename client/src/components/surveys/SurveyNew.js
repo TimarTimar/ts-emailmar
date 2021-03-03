@@ -19,8 +19,8 @@ class SurveyNew extends React.Component {
 		return (
 			<SurveyForm
 				onSurveySubmit={() => this.setState({ showFormReview: true })}
-				submitButtonName="Continue"
-				submitButtonIconName="arrow_forward"
+				submitbuttonname="Continue"
+				submitbuttoniconName="arrow_forward"
 			/>
 		);
 	}

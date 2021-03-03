@@ -27,19 +27,35 @@ class SurveyForm extends React.Component {
 			<div>
 				<form
 					onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
-					submitButtonName={this.props.submitButtonName}
-					submitButtonIconName={this.props.submitButtonIconName}
+					submitbuttonname={this.props.submitbuttonname}
+					submitbuttoniconname={this.props.submitbuttoniconname}
 				>
-					{this.renderFields()}
-					<Link to="/surveys" className="red btn-flat white-text">
-						Cancel
-					</Link>
-					<button className="teal btn-flat right white-text" type="submit">
-						{this.props.submitButtonName}
-						<i className="material-icons right">
-							{this.props.submitButtonIconName}
-						</i>
-					</button>
+					<div>{this.renderFields()}</div>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center",
+							height: "50px",
+							margin: "10px 0px",
+						}}
+					>
+						<Link to="/surveys" className="red btn-flat white-text">
+							Cancel
+						</Link>
+						<button
+							className="btn purple"
+							onClick={() => console.log(FormData)}
+						>
+							Save As Draft
+						</button>
+						<button className="teal btn-flat right white-text" type="submit">
+							{this.props.submitbuttonname}
+							<i className="material-icons right">
+								{this.props.submitbuttoniconname}
+							</i>
+						</button>
+					</div>
 				</form>
 			</div>
 		);

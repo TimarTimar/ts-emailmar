@@ -30,8 +30,8 @@ class SurveyListItemEdit extends React.Component {
 					handleSubmit={() => {
 						console.log(this.state);
 					}}
-					submitButtonName="Send"
-					submitButtonIconName="email"
+					submitbuttonname="Send"
+					submitbuttoniconname="email"
 				/>
 			</div>
 		);
