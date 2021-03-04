@@ -16,7 +16,7 @@ const SurveyListItem = ({
 			renderSendButton:
 				state === "draft" ? (
 					<a className="btn red" href={`/api/send_survey/${_id}`}>
-						Send
+						Quick Send
 					</a>
 				) : null,
 			renderEditButton:
@@ -45,10 +45,20 @@ const SurveyListItem = ({
 				</span>
 				<p>{body}</p>
 				<p>Sent on: {new Date(dateSent).toLocaleDateString("ko-KR")}</p>
+				<h5>
+					Yes: {yes} No: {no}
+				</h5>
 			</div>
-			<div className="card-action">
-				<a>Yes: {yes}</a>
-				<a>No: {no}</a>
+			<div
+				className="card-action"
+				style={{
+					display: "flex",
+					justifyContent: "flex-end",
+					alignItems: "center",
+					height: "50px",
+					margin: "10px 0px",
+				}}
+			>
 				{conditionalDraftRendering(_id, state).renderEditButton}
 				{conditionalDraftRendering(_id, state).renderSendButton}
 				<button className="btn right" onClick={() => showModal(_id)}>
