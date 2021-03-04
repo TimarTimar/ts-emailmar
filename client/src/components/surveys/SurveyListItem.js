@@ -15,7 +15,7 @@ const SurveyListItem = ({
 		return {
 			renderSendButton:
 				state === "draft" ? (
-					<a className="btn red" href={`/api/send_survey/${_id}`}>
+					<a className="btn red" href={`/api/quick_send_survey/${_id}`}>
 						Quick Send
 					</a>
 				) : null,

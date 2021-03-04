@@ -31,20 +31,32 @@ class SurveyListItemEdit extends React.Component {
 		window.location = "/surveys";
 	}
 
+	async sendEmail() {
+		const surveyId = this.props.match.params.surveyId;
+		await axios.patch(`/api/send_survey/${surveyId}`, {
+			...this.props.surveys[0],
+			...this.props.formValues.values,
+		});
+	}
+
 	render() {
 		return (
 			<div>
 				<SurveyForm
 					initialValues={this.state.initaialValues}
-					handleSubmit={() => {
-						console.log(this.state);
-					}}
+					onSurveySubmit={() =>
+						this.sendEmail().then((window.location = "/surveys"))
+					}
 					submitbuttonname="Send"
 					submitbuttoniconname="email"
 				>
 					<button
 						className="purple btn-flat white-text right"
-						onClick={() => this.saveAsDraft()}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+							this.saveAsDraft();
+						}}
 					>
 						Save As Draft
 					</button>

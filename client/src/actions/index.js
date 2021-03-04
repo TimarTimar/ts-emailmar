@@ -28,7 +28,7 @@ export const fetchSurveys = () => async (dispatch) => {
 };
 
 export const fetchSurvey = (surveyId) => async (dispatch) => {
-	const res = await axios.get(`/api/edit_survey/${surveyId}`);
+	const res = await axios.get(`/api/fetch_survey/${surveyId}`);
 
 	dispatch({ type: FETCH_SURVEY, payload: res.data });
 };
