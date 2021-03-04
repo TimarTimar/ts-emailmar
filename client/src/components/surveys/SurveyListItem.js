@@ -44,7 +44,10 @@ const SurveyListItem = ({
 					</i>
 				</span>
 				<p>{body}</p>
-				<p>Sent on: {new Date(dateSent).toLocaleDateString("ko-KR")}</p>
+				<p>
+					Sent on:{" "}
+					{dateSent ? new Date(dateSent).toLocaleDateString("ko-KR") : "-"}
+				</p>
 				<h5>
 					Yes: {yes} No: {no}
 				</h5>
