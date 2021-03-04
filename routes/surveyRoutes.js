@@ -96,6 +96,24 @@ module.exports = (app) => {
 		res.redirect("/surveys");
 	});
 
+	app.patch("/api/edit_survey/:surveyId", async (req, res) => {
+		console.log(req.body);
+		const surveyId = req.param("surveyId");
+		const filter = { _id: surveyId };
+		const { title, subject, body, recipients } = req.body;
+		const response = await Survey.findOneAndUpdate(
+			filter,
+			{
+				title,
+				subject,
+				body,
+				recipients: { email: recipients },
+			},
+			{ new: true }
+		).catch((error) => console.log(error));
+		res.send(response);
+	});
+
 	app.get(
 		"/api/send_survey/:surveyId",
 		requireLogin,

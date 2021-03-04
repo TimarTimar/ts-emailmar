@@ -3,6 +3,7 @@ import React from "react";
 import { fetchSurvey } from "../../actions/index";
 import SurveyForm from "./SurveyForm";
 import { connect } from "react-redux";
+import axios from "axios";
 
 class SurveyListItemEdit extends React.Component {
 	state = { initaialValues: null };
@@ -21,14 +22,13 @@ class SurveyListItemEdit extends React.Component {
 		run();
 	}
 
-	saveasdraft() {
-		if (!this.props.formValues) {
-			return;
-		}
-		console.log({
+	async saveAsDraft() {
+		const surveyId = this.props.match.params.surveyId;
+		await axios.patch(`/api/edit_survey/${surveyId}`, {
 			...this.props.surveys[0],
 			...this.props.formValues.values,
 		});
+		window.location = "/surveys";
 	}
 
 	render() {
@@ -41,8 +41,14 @@ class SurveyListItemEdit extends React.Component {
 					}}
 					submitbuttonname="Send"
 					submitbuttoniconname="email"
-					onsaveasdraft={this.saveasdraft()}
-				/>
+				>
+					<button
+						className="purple btn-flat white-text right"
+						onClick={() => this.saveAsDraft()}
+					>
+						Save As Draft
+					</button>
+				</SurveyForm>
 			</div>
 		);
 	}
