@@ -32,17 +32,27 @@ class Header extends React.Component {
 
 	render() {
 		return (
-			<nav>
-				<div className="nav-wrapper blue-grey">
-					<Link
-						to={this.props.auth ? "/surveys" : "/"}
-						className="left brand-logo"
-					>
-						<i className="material-icons">dashboard</i>Emailmar
-					</Link>
-					<ul className="right">{this.renderContent()}</ul>
-				</div>
-			</nav>
+			<div>
+				<nav>
+					<div className="nav-wrapper blue-grey">
+						<Link
+							to={this.props.auth ? "/surveys" : "/"}
+							className="left brand-logo"
+						>
+							<i className="material-icons">dashboard</i>Emailmar
+						</Link>
+						<a href="#" data-target="mobile" className="sidenav-trigger right">
+							<i className="material-icons">menu</i>
+						</a>
+						<ul className="right hide-on-med-and-down">
+							{this.renderContent()}
+						</ul>
+					</div>
+				</nav>
+				<ul className="sidenav" id="mobile">
+					{this.renderContent()}
+				</ul>
+			</div>
 		);
 	}
 }
