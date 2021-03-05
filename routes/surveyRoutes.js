@@ -95,7 +95,7 @@ module.exports = (app) => {
 		}
 	});
 
-	app.patch("/api/edit_survey/:surveyId", async (req, res) => {
+	app.patch("/api/edit_survey/:surveyId", requireLogin, async (req, res) => {
 		const surveyId = req.param("surveyId");
 		const filter = { _id: surveyId };
 		const { title, subject, body, recipients } = req.body;
@@ -112,32 +112,37 @@ module.exports = (app) => {
 		res.send(response);
 	});
 
-	app.patch("/api/send_survey/:surveyId", async (req, res) => {
-		const surveyId = req.param("surveyId");
-		const filter = { _id: surveyId };
-		const { title, subject, body, recipients } = req.body;
-		const update = {
-			title,
-			subject,
-			body,
-			recipients: { email: recipients },
-			state: "sent",
-			dateSent: Date.now(),
-		};
-		const response = await Survey.findOneAndUpdate(filter, update, {
-			new: true,
-		});
+	app.patch(
+		"/api/send_survey/:surveyId",
+		requireLogin,
+		requireCredits,
+		async (req, res) => {
+			const surveyId = req.param("surveyId");
+			const filter = { _id: surveyId };
+			const { title, subject, body, recipients } = req.body;
+			const update = {
+				title,
+				subject,
+				body,
+				recipients: { email: recipients },
+				state: "sent",
+				dateSent: Date.now(),
+			};
+			const response = await Survey.findOneAndUpdate(filter, update, {
+				new: true,
+			});
 
-		//attempt to send
-		const mailer = new Mailer(response, surveyTemplate(response));
-		try {
-			await mailer.send();
-			req.user.credits -= 1;
-			const user = await req.user.save();
-		} catch (err) {
-			res.status(422).send(err);
+			//attempt to send
+			const mailer = new Mailer(response, surveyTemplate(response));
+			try {
+				await mailer.send();
+				req.user.credits -= 1;
+				const user = await req.user.save();
+			} catch (err) {
+				res.status(422).send(err);
+			}
 		}
-	});
+	);
 
 	app.get(
 		"/api/quick_send_survey/:surveyId",
