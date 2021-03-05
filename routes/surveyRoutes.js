@@ -74,7 +74,7 @@ module.exports = (app) => {
 		res.send(response);
 	});
 
-	app.all("/api/save_as_draft", requireLogin, async (req, res, next) => {
+	app.post("/api/save_as_draft", requireLogin, async (req, res, next) => {
 		const { title, subject, body, recipients } = req.body;
 
 		const survey = new Survey({
@@ -93,7 +93,6 @@ module.exports = (app) => {
 		} catch (err) {
 			res.status(500).send(err);
 		}
-		res.redirect("/surveys");
 	});
 
 	app.patch("/api/edit_survey/:surveyId", async (req, res) => {
