@@ -14,10 +14,6 @@ const SurveyList = () => {
 	const [sorting, setSorting] = useState("asc");
 	const [filter, setFilter] = useState("sent-draft");
 
-	const handleChange = (e) => {
-		setFilter(e.target.value);
-	};
-
 	const showModal = (id) => {
 		setIsOpen(true);
 		setSelectedSurvey(id);
@@ -37,7 +33,7 @@ const SurveyList = () => {
 				<select
 					className="browser-default"
 					value={filter}
-					onChange={() => handleChange()}
+					onChange={(e) => setFilter(e.target.value)}
 				>
 					<option value="sent-draft">All surveys</option>
 					<option value="sent">Sent surveys</option>
