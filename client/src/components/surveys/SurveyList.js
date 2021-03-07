@@ -1,48 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
-import { connect } from "react-redux";
-import { fetchSurveys } from "../../actions";
 import SurveyListItem from "./SurveyListItem";
+import { useSelector, useDispatch } from "react-redux";
+import { FETCH_SURVEYS } from "../../actions/types";
+import { fetchSurveys } from "../../actions/index";
 
-class SurveyList extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			isOpen: false,
-			selectedSurvey: null,
-			sort: "asc",
-			filter: "sent-draft",
-		};
-		this.showModal = this.showModal.bind(this);
-		this.hideModal = this.hideModal.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-	}
+const SurveyList = () => {
+	const dispatch = useDispatch();
+	const surveys = useSelector((state) => state.surveys);
 
-	handleChange = (e) => {
-		this.setState({ filter: e.target.value });
+	const [isOpen, setIsOpen] = useState(false);
+	const [selectedSurvey, setSelectedSurvey] = useState(null);
+	const [sorting, setSorting] = useState("asc");
+	const [filter, setFilter] = useState("sent-draft");
+
+	const handleChange = (e) => {
+		setFilter(e.target.value);
 	};
 
-	showModal = (id) => {
-		this.setState({ isOpen: true });
-		this.setState({ selectedSurvey: id });
+	const showModal = (id) => {
+		setIsOpen(true);
+		setSelectedSurvey(id);
 	};
 
-	hideModal = () => {
-		this.setState({ isOpen: false });
+	const hideModal = () => {
+		setIsOpen(false);
 	};
 
-	componentDidMount() {
-		this.props.fetchSurveys();
-		console.log(this.state);
-	}
+	useEffect(() => {
+		dispatch(fetchSurveys());
+	}, []);
 
-	renderFilterSelection() {
+	const renderFilterSelection = () => {
 		return (
 			<div>
 				<select
 					className="browser-default"
-					value={this.state.filter}
-					onChange={this.handleChange}
+					value={filter}
+					onChange={() => handleChange()}
 				>
 					<option value="sent-draft">All surveys</option>
 					<option value="sent">Sent surveys</option>
@@ -50,8 +45,8 @@ class SurveyList extends React.Component {
 				</select>
 			</div>
 		);
-	}
-	renderOrderByDateButton() {
+	};
+	const renderOrderByDateButton = () => {
 		return (
 			<div
 				style={{
@@ -64,26 +59,24 @@ class SurveyList extends React.Component {
 				<button
 					className="btn center"
 					onClick={() => {
-						this.state.sort === "asc"
-							? this.setState({ sort: "desc" })
-							: this.setState({ sort: "asc" });
-						console.log(this.state);
+						sorting === "asc" ? setSorting("desc") : setSorting("asc");
 					}}
 				>
 					Order by Date
 					<i className="material-icons">
-						{this.state.sort === "asc" ? "arrow_upward" : "arrow_downward"}
+						{sorting === "asc" ? "arrow_upward" : "arrow_downward"}
 					</i>
 				</button>
 			</div>
 		);
-	}
+	};
 
-	renderSurveys() {
+	const renderSurveys = () => {
 		//Order By Date
-		const surveyArray = this.props.surveys;
 
-		if (this.state.sort === "desc") {
+		const surveyArray = surveys;
+
+		if (sorting === "desc") {
 			surveyArray.sort((a, b) => {
 				return new Date(b.dateSent) - new Date(a.dateSent);
 			});
@@ -94,7 +87,7 @@ class SurveyList extends React.Component {
 		}
 
 		return surveyArray
-			.filter((survey) => this.state.filter.includes(survey.state))
+			.filter((survey) => filter.includes(survey.state))
 			.map((survey) => {
 				return (
 					<SurveyListItem
@@ -106,34 +99,36 @@ class SurveyList extends React.Component {
 						body={survey.body}
 						yes={survey.yes}
 						no={survey.no}
-						filter={this.state.filter}
-						showModal={this.showModal}
+						filter={filter}
+						showModal={showModal}
 					/>
 				);
 			});
-	}
+	};
 
-	render() {
-		return (
-			<main>
-				{this.renderFilterSelection()}
-				{this.renderOrderByDateButton()}
-				<Modal
-					open={this.state.isOpen}
-					onClose={this.hideModal}
-					handleConfirm={`/api/delete_survey/${this.state.selectedSurvey}`}
-				>
-					<h1>Delete Survey</h1>
-					<p>Are you sure you want to delete this survey?</p>
-				</Modal>
-				{this.renderSurveys()}
-			</main>
-		);
-	}
-}
+	return (
+		<main>
+			{renderFilterSelection()}
+			{renderOrderByDateButton()}
+			<Modal
+				open={isOpen}
+				onClose={hideModal}
+				handleConfirm={`/api/delete_survey/${selectedSurvey}`}
+			>
+				<h1>Delete Survey</h1>
+				<p>Are you sure you want to delete this survey?</p>
+			</Modal>
+			{renderSurveys()}
+		</main>
+	);
+};
 
+/*
 const mapStateToProps = ({ surveys }) => {
 	return { surveys };
 };
 
 export default connect(mapStateToProps, { fetchSurveys })(SurveyList);
+*/
+
+export default SurveyList;
