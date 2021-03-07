@@ -7,8 +7,8 @@ import formFields from "./formFields";
 import SurveyField from "./SurveyField";
 import validateEmails from "../../utils/validateEmails";
 
-class SurveyForm extends React.Component {
-	renderFields() {
+const SurveyForm = (props) => {
+	const renderFields = () => {
 		return _.map(formFields, ({ label, name }) => {
 			return (
 				<Field
@@ -20,42 +20,38 @@ class SurveyForm extends React.Component {
 				/>
 			);
 		});
-	}
+	};
 
-	render() {
-		return (
-			<div>
-				<form
-					onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}
-					submitbuttonname={this.props.submitbuttonname}
-					submitbuttoniconname={this.props.submitbuttoniconname}
+	return (
+		<div>
+			<form
+				onSubmit={props.handleSubmit(props.onSurveySubmit)}
+				submitbuttonname={props.submitbuttonname}
+				submitbuttoniconname={props.submitbuttoniconname}
+			>
+				<div>{renderFields()}</div>
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+						height: "50px",
+						margin: "10px 0px",
+					}}
 				>
-					<div>{this.renderFields()}</div>
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "space-between",
-							alignItems: "center",
-							height: "50px",
-							margin: "10px 0px",
-						}}
-					>
-						<Link to="/surveys" className="red btn-flat white-text">
-							Cancel
-						</Link>
-						{this.props.children}
-						<button className="teal btn-flat right white-text" type="submit">
-							{this.props.submitbuttonname}
-							<i className="material-icons right">
-								{this.props.submitbuttoniconname}
-							</i>
-						</button>
-					</div>
-				</form>
-			</div>
-		);
-	}
-}
+					<Link to="/surveys" className="red btn-flat white-text">
+						Cancel
+					</Link>
+					{props.children}
+					<button className="teal btn-flat right white-text" type="submit">
+						{props.submitbuttonname}
+						<i className="material-icons right">{props.submitbuttoniconname}</i>
+					</button>
+				</div>
+			</form>
+		</div>
+	);
+};
 
 function validate(values) {
 	const errors = {};
