@@ -7,7 +7,6 @@ import axios from "axios";
 
 const SurveyListItemEdit = (props) => {
 	const surveys = useSelector((state) => state.surveys);
-	console.log(surveys);
 	const formValues = useSelector((state) => state.form.surveyForm);
 	const dispatch = useDispatch();
 
@@ -17,6 +16,7 @@ const SurveyListItemEdit = (props) => {
 		dispatch(fetchSurvey(props.match.params.surveyId));
 	}, []);
 
+	// maybe i could show loading snippet while i dont have all initialvalues
 	useEffect(() => {
 		const values = _.pick(surveys[0], ["title", "subject", "body"]);
 		const email2 = _.get(surveys[0], ["recipients", 0, "email"]);
