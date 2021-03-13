@@ -3,7 +3,7 @@ const helper = sendgrid.mail;
 const keys = require('../config/keys');
 import {surveySchemaInterface} from '../models/Survey';
 
-
+//TODO https://www.npmjs.com/package/@sendgrid/mail
 
 class Mailer extends helper.Mail {
   constructor({ subject, recipients }:surveySchemaInterface, content:HTMLDocument) {
@@ -20,7 +20,7 @@ class Mailer extends helper.Mail {
     this.addRecipients();
   }
 
-  // TODO: 
+  // TODO:
   formatAddresses(recipients:any) {
     return recipients.map(({ email }:any) => {
       return new helper.Email(email);
