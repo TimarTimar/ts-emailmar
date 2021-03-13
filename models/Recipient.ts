@@ -1,9 +1,12 @@
 const mongoose=require('mongoose');
 const {Schema}=mongoose;
 
-const recipientSchema=new Schema({
+export interface recipientSchemaInterface{
+    email:string,
+    responded?:boolean
+}
+
+export const recipientSchema=new Schema({
     email: String,
     responded:{type:Boolean, default:false}
 });
-
-module.exports=(recipientSchema);

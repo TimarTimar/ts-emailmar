@@ -1,12 +1,13 @@
-const express = require("express");
-const mongoose = require("mongoose");
+import express from 'express';
+import mongoose from 'mongoose';
 
 //give access to cookies
-const cookieSession = require("cookie-session");
+import cookieSession from 'cookie-session';
 //tell passport to make use of cookies
-const passport = require("passport");
-const bodyParser = require("body-parser");
+import passport from 'passport';
+import bodyParser from 'body-parser';
 const keys = require("./config/keys");
+
 require("./models/User");
 require("./models/Survey");
 require("./services/passport");

@@ -1,6 +1,12 @@
-const mongoose=require('mongoose');
+import mongoose from 'mongoose';
 
 const {Schema}=mongoose;
+
+export interface userSchemaInterface{
+    _id?:number,
+    googleId:string,
+    credits:number
+}
 
 const userSchema=new Schema({
     googleId: String,
