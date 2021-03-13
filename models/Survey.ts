@@ -6,16 +6,16 @@ const { Schema } = mongoose;
 
 export interface surveySchemaInterface{
 	_id?:number,
-	title: string,
-	body: string,
-	subject: string,
-	recipients: any,
-	yes: number,
-	no: number,
-	_user: any,
-	state: string,
-	dateSent: any,
-	lastResponded: Date,
+	title?: string,
+	body?: string,
+	subject?: string,
+	recipients?: any,
+	yes?: number,
+	no?: number,
+	_user?: any,
+	state?: string,
+	dateSent?: any,
+	lastResponded?: Date,
 }
 
 const surveySchema = new Schema({

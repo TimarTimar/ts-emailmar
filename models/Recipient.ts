@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const {Schema}=mongoose;
 
-export interface recipientSchemaInterface{
+interface recipientSchemaInterface{
     email:string,
     responded?:boolean
 }
