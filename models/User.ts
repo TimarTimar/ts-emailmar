@@ -1,8 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, {Schema, Document} from 'mongoose';
 
-const {Schema}=mongoose;
-
-export interface userSchemaInterface{
+export interface userSchemaInterface extends Document{
     _id?:number,
     googleId:string,
     credits:number
@@ -13,4 +11,4 @@ const userSchema=new Schema({
     credits: {type:Number, default:0}
 });
 
-mongoose.model('users', userSchema);
+mongoose.model<userSchemaInterface>('users', userSchema);

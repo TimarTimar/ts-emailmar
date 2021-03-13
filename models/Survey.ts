@@ -1,20 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, {Schema, Document} from 'mongoose';
+import {recipientSchema, recipientSchemaInterface} from './Recipient';
+import {userSchemaInterface} from './User';
 
-import {recipientSchema} from './Recipient';
 
-const { Schema } = mongoose;
-
-export interface surveySchemaInterface{
+export interface surveySchemaInterface extends Document{
 	_id?:number,
 	title?: string,
 	body?: string,
 	subject?: string,
-	recipients?: any,
+	recipients?: recipientSchemaInterface[],
 	yes?: number,
 	no?: number,
-	_user?: any,
+	_user?: userSchemaInterface['_id'],
 	state?: string,
-	dateSent?: any,
+	dateSent?: Date,
 	lastResponded?: Date,
 }
 
@@ -31,4 +30,4 @@ const surveySchema = new Schema({
 	lastResponded: Date,
 });
 
-mongoose.model("surveys", surveySchema);
+mongoose.model<surveySchemaInterface>("surveys", surveySchema);

@@ -1,7 +1,7 @@
-const mongoose=require('mongoose');
-const {Schema}=mongoose;
 
-interface recipientSchemaInterface{
+import {Schema} from "mongoose";
+
+export interface recipientSchemaInterface {
     email:string,
     responded?:boolean
 }
