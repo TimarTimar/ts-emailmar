@@ -1,6 +1,7 @@
-const passport=require('passport');
+import { Express, Request, Response } from 'express';
+import passport from 'passport';
 
-module.exports=(app)=>{
+module.exports=(app:Express)=>{
     app.get('/auth/google', passport.authenticate('google', {
         scope: ['profile', 'email']
         })
@@ -8,17 +9,17 @@ module.exports=(app)=>{
     
     app.get('/auth/google/callback',
     passport.authenticate('google'),
-    (req,res)=>{
+    (req:Request,res:Response)=>{
         res.redirect('/surveys');
     }
     );
 
-    app.get('/api/logout', (req,res)=>{
+    app.get('/api/logout', (req:Request,res:Response)=>{
         req.logout();
         res.redirect('/');
     });
 
-    app.get('/api/current_user', (req, res)=>{
+    app.get('/api/current_user', (req:Request, res:Response)=>{
         res.send(req.user);
     });
 };
