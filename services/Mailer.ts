@@ -2,6 +2,7 @@ const sendgrid = require('sendgrid');
 const helper = sendgrid.mail;
 const keys = require('../config/keys');
 import {SurveyProps} from '../models/Survey';
+import {RecipientProps} from '../models/Recipient';
 
 //TODO
 
@@ -21,10 +22,14 @@ class Mailer extends helper.Mail {
   }
 
   // TODO:
-  formatAddresses(recipients:any) {
-    return recipients.map(({ email }:any) => {
-      return new helper.Email(email);
-    });
+  formatAddresses(recipients:RecipientProps[]) {
+    if(recipients){
+      return recipients.map(({ email }) => {
+        return new helper.Email(email);
+      });
+    }else{
+      return
+    }
   }
 
   addClickTracking() {

@@ -8,7 +8,7 @@ export const surveySchema = createSchema({
 	title: Type.string(),
 	body: Type.string(),
 	subject: Type.string(),
-	recipients: Type.array().of(recipientSchema),
+	recipients: Type.array({required:true}).of(recipientSchema),
 	yes: Type.number({default:0}),
 	no: Type.number({default:0}),
 	_user: Type.ref(Type.objectId()).to('User', userSchema), 
