@@ -1,7 +1,7 @@
 const keys = require("../../config/keys");
-import {surveySchemaInterface} from '../../models/Survey';
+import {SurveyProps} from '../../models/Survey';
 
-module.exports = (survey:surveySchemaInterface) => {
+module.exports = (survey:SurveyProps) => {
 	return `
     <html>
         <body>

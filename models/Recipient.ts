@@ -1,11 +1,6 @@
-import {Schema} from "mongoose";
+import {createSchema, Type} from 'ts-mongoose';
 
-export interface recipientSchemaInterface {
-    email:string,
-    responded?:boolean
-}
-
-export const recipientSchema=new Schema({
-    email: String,
-    responded:{type:Boolean, default:false}
+export const recipientSchema=createSchema({
+    email: Type.string({required:true}),
+    responded: Type.boolean({default:false})
 });

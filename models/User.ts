@@ -1,14 +1,10 @@
-import mongoose, {Schema, Document} from 'mongoose';
+import {createSchema, ExtractDoc, ExtractProps, Type, typedModel} from 'ts-mongoose';
 
-export interface userSchemaInterface extends Document{
-    _id?:number,
-    googleId:string,
-    credits:number
-}
-
-const userSchema=new Schema({
-    googleId: String,
-    credits: {type:Number, default:0}
+export const userSchema=createSchema({
+    googleId: Type.string(),
+    credits: Type.number({default:0})
 });
 
-export default mongoose.model<userSchemaInterface>('users', userSchema);
+export const User=typedModel('users', userSchema);
+export type userDoc=ExtractDoc<typeof userSchema>;
+export type userProps=ExtractProps<typeof userSchema>;

@@ -1,33 +1,24 @@
-import mongoose, {Schema, Document} from 'mongoose';
-import {recipientSchema, recipientSchemaInterface} from './Recipient';
-import {userSchemaInterface} from './User';
+import {createSchema, ExtractDoc, ExtractProps, Type, typedModel} from 'ts-mongoose';
+import {recipientSchema} from './Recipient';
+import {User, userSchema} from '../models/User';
 
+//_user: { type: Schema.Types.ObjectId, ref: "User" },
 
-export interface surveySchemaInterface extends Document{
-	_id?:number,
-	title?: string,
-	body?: string,
-	subject?: string,
-	recipients?: recipientSchemaInterface[],
-	yes?: number,
-	no?: number,
-	_user?: userSchemaInterface['_id'],
-	state?: string,
-	dateSent?: Date,
-	lastResponded?: Date,
-}
-
-const surveySchema = new Schema({
-	title: String,
-	body: String,
-	subject: String,
-	recipients: [recipientSchema],
-	yes: { type: Number, default: 0 },
-	no: { type: Number, default: 0 },
-	_user: { type: Schema.Types.ObjectId, ref: "User" },
-	state: { type: String, default: "draft" },
-	dateSent: { type: Date, default: null },
-	lastResponded: Date,
+export const surveySchema = createSchema({
+	title: Type.string(),
+	body: Type.string(),
+	subject: Type.string(),
+	recipients: Type.array().of(recipientSchema),
+	yes: Type.number({default:0}),
+	no: Type.number({default:0}),
+	_user: Type.ref(Type.objectId()).to('User', userSchema), 
+	state: Type.string({default:"draft"}),
+	dateSent: Type.date({default:null}),
+	lastResponded: Type.date(),
 });
 
-export default mongoose.model<surveySchemaInterface>("surveys", surveySchema);
+//export default mongoose.model<surveySchemaInterface>("surveys", surveySchema);
+
+export const Survey=typedModel('surveys', surveySchema);
+export type SurveyDoc=ExtractDoc<typeof surveySchema>;
+export type SurveyProps=ExtractProps<typeof surveySchema>;

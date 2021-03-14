@@ -1,12 +1,12 @@
 const sendgrid = require('sendgrid');
 const helper = sendgrid.mail;
 const keys = require('../config/keys');
-import {surveySchemaInterface} from '../models/Survey';
+import {SurveyProps} from '../models/Survey';
 
 //TODO
 
 class Mailer extends helper.Mail {
-  constructor({ subject, recipients }:surveySchemaInterface, content:HTMLDocument) {
+  constructor({ subject, recipients }:SurveyProps, content:HTMLDocument) {
     super();
 
     this.sgApi = sendgrid(keys.sendGridKey);
