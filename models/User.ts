@@ -11,4 +11,4 @@ const userSchema=new Schema({
     credits: {type:Number, default:0}
 });
 
-mongoose.model<userSchemaInterface>('users', userSchema);
+export default mongoose.model<userSchemaInterface>('users', userSchema);

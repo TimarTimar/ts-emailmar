@@ -30,4 +30,4 @@ const surveySchema = new Schema({
 	lastResponded: Date,
 });
 
-mongoose.model<surveySchemaInterface>("surveys", surveySchema);
+export default mongoose.model<surveySchemaInterface>("surveys", surveySchema);
