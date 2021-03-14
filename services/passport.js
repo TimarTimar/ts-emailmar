@@ -1,17 +1,19 @@
-const passport = require("passport");
+import passport from "passport";
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const keys = require("../config/keys");
 
 import { User } from "../models/User";
 
 passport.serializeUser((user, done) => {
-	// reason1: we use user.id which is the database id, cause we could implement multiple strategy exclude google
+	// reason1: we use user._id which is the database id, cause we could implement multiple strategy exclude google
 	// reason2: Google Auth separate concern, we use our own id from here, ty
-	done(null, user._id);
+	User.findById(user._id).then((user) => {
+		done(null, user._id);
+	});
 });
 
-passport.deserializeUser((id, done) => {
-	User.findById(id).then((user) => {
+passport.deserializeUser((_id, done) => {
+	User.findById(_id).then((user) => {
 		done(null, user);
 	});
 });
