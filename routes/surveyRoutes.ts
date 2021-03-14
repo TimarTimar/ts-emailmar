@@ -9,17 +9,16 @@ import surveyTemplate from "../services/emailTemplates/surveyTemplate";
 
 //we got the Class
 import { Survey } from "../models/Survey";
+import { Express } from "express";
 
-module.exports = (app) => {
+module.exports = (app:Express) => {
 	app.all("/api/delete_survey/:surveyId", requireLogin, async (req, res) => {
 		const surveyId = req.param("surveyId");
-		await Survey.findByIdAndRemove(surveyId, () => {
-			console.log("deleted");
-		}).catch((error) => console.log(error));
+		await Survey.findByIdAndRemove(surveyId).catch((error) => console.log(error));
 		res.redirect("/surveys");
 	});
 
-	app.get("/api/surveys", requireLogin, async (req, res) => {
+	app.get("/api/surveys", requireLogin, async (req:any, res) => {
 		const surveys = await Survey.find({ _user: req.user.id }).select({
 			recipients: false,
 		});
@@ -44,7 +43,7 @@ module.exports = (app) => {
 			})
 			//remove undefined elements
 			.compact()
-			.uniqBy("email", "surveyId")
+			.uniqBy(["email", "surveyId"])
 			.each(({ surveyId, email, choice }) => {
 				Survey.updateOne(
 					{
@@ -71,7 +70,7 @@ module.exports = (app) => {
 		res.send(response);
 	});
 
-	app.post("/api/save_as_draft", requireLogin, async (req, res, next) => {
+	app.post("/api/save_as_draft", requireLogin, async (req:any, res, next) => {
 		const { title, subject, body, recipients } = req.body;
 
 		const survey = new Survey({
@@ -80,7 +79,7 @@ module.exports = (app) => {
 			body,
 			recipients: recipients
 				.split(",")
-				.map((email) => ({ email: email.trim() })),
+				.map((email:any) => ({ email: email.trim() })),
 			_user: req.user.id,
 		});
 
@@ -113,7 +112,7 @@ module.exports = (app) => {
 		"/api/send_survey/:surveyId",
 		requireLogin,
 		requireCredits,
-		async (req, res) => {
+		async (req:any, res) => {
 			const surveyId = req.param("surveyId");
 			const filter = { _id: surveyId };
 			const { title, subject, body, recipients } = req.body;
@@ -129,15 +128,18 @@ module.exports = (app) => {
 				new: true,
 			});
 
-			//attempt to send
-			const mailer = new Mailer(response, surveyTemplate(response));
-			try {
-				await mailer.send();
-				req.user.credits -= 1;
-				const user = await req.user.save();
-			} catch (err) {
-				res.status(422).send(err);
-			}
+			if (response){
+				const mailer = new Mailer(response, surveyTemplate(response));
+				try {
+					await mailer.send();
+					req.user.credits -= 1;
+					const user = await req.user.save();
+				} catch (err) {
+					res.status(422).send(err);
+				}
+			}else{
+				return
+			}			
 		}
 	);
 
@@ -145,15 +147,15 @@ module.exports = (app) => {
 		"/api/quick_send_survey/:surveyId",
 		requireLogin,
 		requireCredits,
-		async (req, res) => {
+		async (req:any, res) => {
 			const surveyId = req.param("surveyId");
 			const filter = { _id: surveyId };
 			const update = { state: "sent", dateSent: Date.now() };
 			const response = await Survey.findOneAndUpdate(filter, update);
 
 			//attempt to Send
-			const mailer = new Mailer(response, surveyTemplate(response));
-
+			if (response){
+				const mailer = new Mailer(response, surveyTemplate(response));
 			try {
 				await mailer.send();
 				req.user.credits -= 1;
@@ -162,10 +164,13 @@ module.exports = (app) => {
 			} catch (err) {
 				res.status(422).send(err);
 			}
+			}else{
+				return
+			}
 		}
 	);
 
-	app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
+	app.post("/api/surveys", requireLogin, requireCredits, async (req:any, res) => {
 		const { title, subject, body, recipients } = req.body;
 
 		const survey = new Survey({
@@ -174,7 +179,7 @@ module.exports = (app) => {
 			body,
 			recipients: recipients
 				.split(",")
-				.map((email) => ({ email: email.trim() })),
+				.map((email:string) => ({ email: email.trim() })),
 			_user: req.user.id,
 			state: "sent",
 			dateSent: Date.now(),

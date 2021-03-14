@@ -1,7 +1,7 @@
 const keys = require("../../config/keys");
-import {SurveyProps} from '../../models/Survey';
+import {SurveyDoc} from '../../models/Survey';
 
-module.exports = (survey:SurveyProps) => {
+export default (survey:SurveyDoc) => {
 	return `
     <html>
         <body>

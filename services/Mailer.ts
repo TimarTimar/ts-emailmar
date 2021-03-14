@@ -7,7 +7,7 @@ import {RecipientProps} from '../models/Recipient';
 //TODO
 
 class Mailer extends helper.Mail {
-  constructor({ subject, recipients }:SurveyProps, content:HTMLDocument) {
+  constructor({ subject, recipients }:SurveyProps, content:string) {
     super();
 
     this.sgApi = sendgrid(keys.sendGridKey);
@@ -61,4 +61,4 @@ class Mailer extends helper.Mail {
   }
 }
 
-module.exports = Mailer;
+export default Mailer;
