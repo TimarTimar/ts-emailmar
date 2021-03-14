@@ -1,17 +1,14 @@
-const _ = require("lodash");
-const { Path } = require("path-parser");
-const { URL } = require("url");
+import _ from "lodash";
+import { Path } from "path-parser";
+import { URL } from "url";
 
-const mongoose = require("mongoose");
-const requireLogin = require("../middlewares/requireLogin");
-const requireCredits = require("../middlewares/requireCredits");
-const Mailer = require("../services/Mailer");
-const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
-const { response } = require("express");
-const { filter } = require("lodash");
+import requireLogin from "../middlewares/requireLogin";
+import requireCredits from "../middlewares/requireCredits";
+import Mailer from "../services/Mailer";
+import surveyTemplate from "../services/emailTemplates/surveyTemplate";
 
 //we got the Class
-const Survey = mongoose.model("surveys");
+import { Survey } from "../models/Survey";
 
 module.exports = (app) => {
 	app.all("/api/delete_survey/:surveyId", requireLogin, async (req, res) => {
