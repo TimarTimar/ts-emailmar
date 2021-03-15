@@ -2,8 +2,8 @@ import _ from "lodash";
 import { Path } from "path-parser";
 import { URL } from "url";
 
-import requireLogin from "../middlewares/requireLogin";
-import requireCredits from "../middlewares/requireCredits";
+const requireLogin = require ('../middlewares/requireLogin');
+const requireCredits = require('../middlewares/requireCredits');
 import Mailer from "../services/Mailer";
 import surveyTemplate from "../services/emailTemplates/surveyTemplate";
 
