@@ -1,10 +1,11 @@
 import React from "react";
 import { connect, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "../reducers";
 import Payments from "./Payments";
 
-const Header = (props) => {
-	const auth = useSelector((state) => state.auth);
+const Header = () => {
+	const auth = useSelector((state:RootState) => state.auth);
 	const renderContent = () => {
 		switch (auth) {
 			case null:
