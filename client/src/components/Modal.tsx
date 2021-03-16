@@ -1,7 +1,7 @@
-import React from "react";
+import React, { CSSProperties, ReactNode } from "react";
 import ReactDom from "react-dom";
 
-const MODAL_STYLES = {
+const MODAL_STYLES:CSSProperties = {
 	position: "fixed",
 	top: "50%",
 	left: "50%",
@@ -13,7 +13,7 @@ const MODAL_STYLES = {
 	zIndex: 1000,
 };
 
-const OVERLAY_STYLES = {
+const OVERLAY_STYLES:CSSProperties = {
 	position: "fixed",
 	top: 0,
 	left: 0,
@@ -23,7 +23,14 @@ const OVERLAY_STYLES = {
 	zIndex: 1000,
 };
 
-export default function Modal({ open, children, onClose, handleConfirm }) {
+export interface ModalProps{
+	open:boolean,
+	children:ReactNode,
+	onClose:()=>any,
+	handleConfirm:string
+}
+
+export default function Modal({ open, children, onClose, handleConfirm }:ModalProps) {
 	if (!open) return null;
 	return ReactDom.createPortal(
 		<>
@@ -38,6 +45,6 @@ export default function Modal({ open, children, onClose, handleConfirm }) {
 				</a>
 			</div>
 		</>,
-		document.getElementById("portal")
+		document.getElementById("portal")!
 	);
 }
