@@ -3,13 +3,13 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 
-import Header from "../components/Header";
-import Landing from "../components/Landing";
-import Dashboard from "../components/Dashboard";
-import SurveyNew from "../components/surveys/SurveyNew";
-import SurveyListItemEdit from "../components/surveys/SurveyListItemEdit";
+import Header from "./Header";
+import Landing from "./Landing";
+import Dashboard from "./Dashboard";
+import SurveyNew from "./surveys/SurveyNew";
+import SurveyListItemEdit from "./surveys/SurveyListItemEdit";
 
-const App = (props) => {
+const App = (props:any):any => {
 	/*componentDidMount() {
 		this.props.fetchUser();
 	}*/
