@@ -1,8 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
+import {useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "../reducers";
 
-const Landing = ({ auth }) => {
+
+const Landing = () => {
+	const auth = useSelector((state:RootState) => state.auth)
 	return (
 		<div>
 			<h2 className="header">Welcome</h2>
@@ -24,8 +27,5 @@ const Landing = ({ auth }) => {
 	);
 };
 
-const mapStateToProps = ({ auth }) => {
-	return { auth };
-};
 
-export default connect(mapStateToProps)(Landing);
+export default Landing;
