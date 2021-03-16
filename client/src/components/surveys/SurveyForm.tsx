@@ -1,13 +1,23 @@
 //SurveyForm shows a form for a user to add input
 import _ from "lodash";
-import React from "react";
-import { reduxForm, Field } from "redux-form";
+import React, { ReactNode } from "react";
+import { reduxForm, Field, Form, InjectedFormProps } from "redux-form";
 import { Link } from "react-router-dom";
 import formFields from "./formFields";
 import SurveyField from "./SurveyField";
 import validateEmails from "../../utils/validateEmails";
 
-const SurveyForm = (props) => {
+interface SurveyFormProps{
+	onSurveySubmit:()=>any,
+	handleSubmit:any,
+	children:ReactNode,
+	submitbuttonname:string,
+	submitbuttoniconname:string,
+};
+
+//It seems redux-form expects class based components, I couldn't add customprops
+
+const SurveyForm = (props:any) => {
 	const renderFields = () => {
 		return _.map(formFields, ({ label, name }) => {
 			return (
@@ -24,11 +34,7 @@ const SurveyForm = (props) => {
 
 	return (
 		<div>
-			<form
-				onSubmit={props.handleSubmit(props.onSurveySubmit)}
-				submitbuttonname={props.submitbuttonname}
-				submitbuttoniconname={props.submitbuttoniconname}
-			>
+			<form onSubmit={props.handleSubmit(props.onSurveySubmit)}>
 				<div>{renderFields()}</div>
 				<div
 					style={{
@@ -43,7 +49,12 @@ const SurveyForm = (props) => {
 						Cancel
 					</Link>
 					{props.children}
-					<button className="teal btn-flat right white-text" type="submit">
+					<button
+						name={props.submitbuttonname}
+						value={props.submitbuttoniconname}
+						className="teal btn-flat right white-text"
+						type="submit"
+					>
 						{props.submitbuttonname}
 						<i className="material-icons right">{props.submitbuttoniconname}</i>
 					</button>
@@ -53,8 +64,8 @@ const SurveyForm = (props) => {
 	);
 };
 
-function validate(values) {
-	const errors = {};
+function validate(values:any) {
+	const errors:any = {};
 
 	// after click countinue on form change emails like this and  str = str.replace(/,\s*$/, "");
 
@@ -66,7 +77,7 @@ function validate(values) {
 		);
 	}
 
-	_.each(formFields, ({ name }) => {
+	_.each(formFields, ({ name }:any) => {
 		if (!values[name]) {
 			errors[name] = `Missing ${name}! You must provide a value`;
 		}

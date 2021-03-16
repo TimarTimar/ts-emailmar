@@ -2,7 +2,7 @@
 
 import React from "react";
 
-interface SurveyFieldProps{
+export interface SurveyFieldProps{
 	input:string,
 	label:string,
 	meta:{error:string, touched:boolean}
