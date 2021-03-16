@@ -1,3 +1,5 @@
+type formFieldsType=Record<string, string>
+
 const formFields=[
     {label:'Survey Title', name:'title'},
     {label:'Subject Line', name:'subject'},
