@@ -7,7 +7,11 @@ import formFields from "./formFields";
 import SurveyField from "./SurveyField";
 import validateEmails from "../../utils/validateEmails";
 
-interface SurveyFormProps{
+/*
+It seems redux-form expects class based components, I couldn't add customprops
+
+
+interface SurveyFormProps extends InjectedFormProps, Form{
 	onSurveySubmit:()=>any,
 	handleSubmit:any,
 	children:ReactNode,
@@ -15,7 +19,12 @@ interface SurveyFormProps{
 	submitbuttoniconname:string,
 };
 
-//It seems redux-form expects class based components, I couldn't add customprops
+Argument of type '(props: SurveyFormProps) => JSX.Element' is not assignable to parameter of type 'ComponentType<InjectedFormProps<any, {}, string>>'.
+  Type '(props: SurveyFormProps) => JSX.Element' is not assignable to type 'FunctionComponent<InjectedFormProps<any, {}, string>>'.
+    Types of parameters 'props' and 'props' are incompatible.
+      Type 'InjectedFormProps<any, {}, string> & { children?: ReactNode; }' is missing the following properties from type 'SurveyFormProps': onSurveySubmit, submitbuttonname, submitbuttoniconname, context, and 6 more.ts(2345)
+
+*/
 
 const SurveyForm = (props:any) => {
 	const renderFields = () => {
