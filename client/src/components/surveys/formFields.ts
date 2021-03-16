@@ -1,4 +1,4 @@
-type formFieldsType=Record<string, string>
+export type formFieldsType=Record<string, string>
 
 const formFields=[
     {label:'Survey Title', name:'title'},
