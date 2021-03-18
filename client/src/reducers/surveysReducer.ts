@@ -19,7 +19,7 @@ interface surveyActionInterface{
 	payload:surveyStateInterface
 }
 
-const surveysReducer = (state = [], action:surveyActionInterface) => {
+const surveysReducer = (state:surveyStateInterface[] | [] = [], action:surveyActionInterface) => {
 	switch (action.type) {
 		case FETCH_SURVEYS:
 			return action.payload;
