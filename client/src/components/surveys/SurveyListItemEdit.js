@@ -46,8 +46,6 @@ const SurveyListItemEdit = (props) => {
 			<SurveyForm
 				initialValues={initaialValues}
 				onSurveySubmit={() => sendEmail().then((window.location = "/surveys"))}
-				submitbuttonname="Send"
-				submitbuttoniconname="email"
 			>
 				<button
 					className="purple btn-flat white-text right"

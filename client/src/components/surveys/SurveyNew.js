@@ -14,13 +14,7 @@ const SurveyNew = () => {
 			return <SurveyFormReview onCancel={() => setShowFormReview(false)} />;
 		}
 
-		return (
-			<SurveyForm
-				onSurveySubmit={() => setShowFormReview(true)}
-				submitbuttonname="Continue"
-				submitbuttoniconName="arrow_forward"
-			/>
-		);
+		return <SurveyForm onSurveySubmit={() => setShowFormReview(true)} />;
 	};
 
 	return <div>{renderContent()}</div>;

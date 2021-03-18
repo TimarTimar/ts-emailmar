@@ -26,7 +26,7 @@ Argument of type '(props: SurveyFormProps) => JSX.Element' is not assignable to 
 
 */
 
-const SurveyForm = (props:any) => {
+const SurveyForm:any = (props:any) => {
 	const renderFields = () => {
 		return _.map(formFields, ({ label, name }) => {
 			return (
@@ -59,13 +59,11 @@ const SurveyForm = (props:any) => {
 					</Link>
 					{props.children}
 					<button
-						name={props.submitbuttonname}
-						value={props.submitbuttoniconname}
 						className="teal btn-flat right white-text"
 						type="submit"
 					>
-						{props.submitbuttonname}
-						<i className="material-icons right">{props.submitbuttoniconname}</i>
+						Continue
+						<i className="material-icons right">arrow_right</i>
 					</button>
 				</div>
 			</form>
