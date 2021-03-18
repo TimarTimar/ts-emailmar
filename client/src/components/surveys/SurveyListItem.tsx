@@ -1,5 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {surveyStateInterface} from '../../reducers/surveysReducer';
+
+interface surveyListItemProps extends surveyStateInterface{
+	showModal:(id:string)=>{
+		setIsOpen:(value:React.SetStateAction<boolean>)=>boolean,
+		setSelectedSurvey:(value:React.SetStateAction<null | string>)=>string
+	}
+}
 
 const SurveyListItem = ({
 	_id,
@@ -10,8 +18,8 @@ const SurveyListItem = ({
 	yes,
 	no,
 	showModal,
-}) => {
-	const conditionalDraftRendering = (_id, state) => {
+}:surveyListItemProps) => {
+	const conditionalDraftRendering = (_id:string, state:"sent" | "draft") => {
 		return {
 			renderSendButton:
 				state === "draft" ? (
