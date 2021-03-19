@@ -13,7 +13,7 @@ export interface Survey{
 }
 
 export interface SurveyState{
-    surveys:Survey[] | []
+    surveys:Survey[]
 }
 
 

@@ -16,12 +16,12 @@ export interface FetchUserAction{
 
 interface FetchSurveysAction{
     type:typeof FETCH_SURVEYS
-    payload?: SurveyState[]
+    payload: SurveyState[]
 }
 
 interface FetchSurveyAction{
     type:typeof FETCH_SURVEY
-    payload?: SurveyState
+    payload: SurveyState
 }
 
 export type SurveysActionTypes= FetchSurveysAction | FetchSurveyAction
