@@ -1,17 +1,9 @@
-import { FETCH_USER } from "../actions/types";
+import { FetchUserAction, FETCH_USER } from "../actions/types";
+import {  AuthState } from "./types";
 
-export interface authStateInterface{
-	credits:number,
-	_id:string,
-	googleId:string,
-}
 
-export interface authActionsInteface{
-	type:string,
-	payload:authStateInterface
-}
 
-export default function authReducer(state: any = null, action:authActionsInteface) {
+export default function authReducer(state: AuthState | null = null, action:FetchUserAction) {
 	switch (action.type) {
 		case FETCH_USER:
 			return action.payload || false;

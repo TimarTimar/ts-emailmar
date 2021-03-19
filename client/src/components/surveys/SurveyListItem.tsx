@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {surveyStateInterface} from '../../reducers/surveysReducer';
+import {Survey} from '../../reducers/types';
 
-interface surveyListItemProps extends surveyStateInterface{
+interface surveyListItemProps extends Survey{
 	showModal:(id:string)=>{
 		setIsOpen:(value:React.SetStateAction<boolean>)=>boolean,
 		setSelectedSurvey:(value:React.SetStateAction<null | string>)=>string
