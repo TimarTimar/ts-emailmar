@@ -1,4 +1,7 @@
 import { FETCH_SURVEY, FETCH_SURVEYS } from "../actions/types";
+import { SurveyState } from "./types";
+
+
 
 const surveysReducer = (state:any = [], action:any) => {
 	switch (action.type) {
