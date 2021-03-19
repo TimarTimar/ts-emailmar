@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
-import SurveyListItem from "./SurveyListItem";
 import { useSelector, useDispatch } from "react-redux";
-import { FETCH_SURVEYS } from "../../actions/types";
 import { fetchSurveys } from "../../actions/index";
+import {SurveyState } from "../../reducers/types";
+import SurveyListItem from "./SurveyListItem";
 
 const SurveyList = () => {
 	const dispatch = useDispatch();
-	const surveys = useSelector((state) => state.surveys);
+	const surveys = useSelector((state:SurveyState) => state.surveys);
 
 	const [isOpen, setIsOpen] = useState(false);
-	const [selectedSurvey, setSelectedSurvey] = useState(null);
+	const [selectedSurvey, setSelectedSurvey] = useState("");
 	const [sorting, setSorting] = useState("asc");
 	const [filter, setFilter] = useState("sent-draft");
 
-	const showModal = (id) => {
+	const showModal = (id:string)=>{
 		setIsOpen(true);
 		setSelectedSurvey(id);
 	};
@@ -74,11 +74,11 @@ const SurveyList = () => {
 
 		if (sorting === "desc") {
 			surveyArray.sort((a, b) => {
-				return new Date(b.dateSent) - new Date(a.dateSent);
+				return new Date(b.dateSent).valueOf() - new Date(a.dateSent).valueOf();
 			});
 		} else {
 			surveyArray.sort((a, b) => {
-				return new Date(a.dateSent) - new Date(b.dateSent);
+				return new Date(a.dateSent).valueOf() - new Date(b.dateSent).valueOf();
 			});
 		}
 
@@ -92,6 +92,7 @@ const SurveyList = () => {
 						state={survey.state}
 						title={survey.title}
 						dateSent={survey.dateSent}
+						subject={survey.subject}
 						body={survey.body}
 						yes={survey.yes}
 						no={survey.no}

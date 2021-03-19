@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {Survey} from '../../reducers/types';
 
-interface surveyListItemProps extends Survey{
-	showModal:(id:string)=>{
-		setIsOpen:(value:React.SetStateAction<boolean>)=>boolean,
-		setSelectedSurvey:(value:React.SetStateAction<null | string>)=>string
+export interface SurveyWithModalAndFilter extends Survey{
+	showModal:(id:string)=>void
+	filter:string
 	}
-}
 
 const SurveyListItem = ({
 	_id,
@@ -18,7 +16,7 @@ const SurveyListItem = ({
 	yes,
 	no,
 	showModal,
-}:surveyListItemProps) => {
+}:SurveyWithModalAndFilter) => {
 	const conditionalDraftRendering = (_id:string, state:"sent" | "draft") => {
 		return {
 			renderSendButton:

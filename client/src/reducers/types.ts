@@ -2,14 +2,14 @@ export interface Survey{
 	yes: number
 	no: 0
   state: "draft" | "sent"
-  dateSent?: string | Date | null
+  dateSent?: any
   _id: string
   title: string
   subject: string
   participiants?: string
   body: string
-  _user: string
-  lastResponded:string | Date | null
+  _user?: string
+  lastResponded?:any
 }
 
 export interface SurveyState{
