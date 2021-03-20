@@ -9,10 +9,15 @@ import Dashboard from "./Dashboard";
 import SurveyNew from "./surveys/SurveyNew";
 import SurveyListItemEdit from "./surveys/SurveyListItemEdit";
 
-const App = (props:any):any => {
-	/*componentDidMount() {
-		this.props.fetchUser();
-	}*/
+
+/*
+import { Dispatch } from "redux";
+interface AppProps{
+	fetchUser: () => (dispatch: Dispatch) => Promise<void>
+}
+*/
+
+const App:React.FC<any> = (props) => {
 
 	useEffect(() => {
 		props.fetchUser();

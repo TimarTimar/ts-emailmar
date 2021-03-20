@@ -3,7 +3,7 @@ import _ from "lodash";
 import React, { ReactNode } from "react";
 import { reduxForm, Field, Form, InjectedFormProps } from "redux-form";
 import { Link } from "react-router-dom";
-import formFields from "./formFields";
+import formFields, { formFieldsType } from "./formFields";
 import SurveyField from "./SurveyField";
 import validateEmails from "../../utils/validateEmails";
 
@@ -71,8 +71,10 @@ const SurveyForm:any = (props:any) => {
 	);
 };
 
-function validate(values:any) {
-	const errors:any = {};
+
+
+function validate(values:formFieldsType) {
+	const errors:any = {}
 
 	// after click countinue on form change emails like this and  str = str.replace(/,\s*$/, "");
 
@@ -84,7 +86,7 @@ function validate(values:any) {
 		);
 	}
 
-	_.each(formFields, ({ name }:any) => {
+	_.each(formFields, ({ name }) => {
 		if (!values[name]) {
 			errors[name] = `Missing ${name}! You must provide a value`;
 		}

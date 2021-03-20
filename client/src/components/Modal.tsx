@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from "react";
+import React, { CSSProperties, MouseEventHandler, ReactNode } from "react";
 import ReactDom from "react-dom";
 
 const MODAL_STYLES:CSSProperties = {
@@ -26,7 +26,7 @@ const OVERLAY_STYLES:CSSProperties = {
 export interface ModalProps{
 	open:boolean,
 	children:ReactNode,
-	onClose:()=>any,
+	onClose:MouseEventHandler<HTMLButtonElement>,
 	handleConfirm:string
 }
 
