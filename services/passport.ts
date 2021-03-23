@@ -1,10 +1,9 @@
-import { Express } from "express";
 import passport from "passport";
 // const GoogleStrategy = require("passport-google-oauth20").Strategy;
 import GoogleOauth20 from 'passport-google-oauth20';
 const keys = require("../config/keys");
 
-import { User, userDoc, userProps } from "../models/User";
+import { User } from "../models/User";
 
 
 
@@ -12,7 +11,12 @@ import { User, userDoc, userProps } from "../models/User";
 
 1. extend express user with my user model: https://github.com/DefinitelyTyped/DefinitelyTyped/commit/91c229dbdb653dbf0da91992f525905893cbeb91#r34805708-> TypeError: Unable to require file: models\User.ts
 
-2. Done is not a function: https://github.com/jaredhanson/passport/issues/421 */
+2. Done is not a function: https://github.com/jaredhanson/passport/issues/421 
+
+3. Solution I had to change the import to get @types/passport-google-oauth20
+*/
+
+
 type userType = Express.User & {_id?:string}
 
 passport.serializeUser((user:userType, done) => {
@@ -55,6 +59,9 @@ passport.use(
     
 		},
 		
+		//passReqToCallback is a bit weird.
+		//I must leave accessToken and refreshToken here to make Typescript happy
+
 		function (accessToken, refreshToken, profile:GoogleProfile, done) {
 			// Do stuff with the profile like add it to your DB.
 			User.findOne({
@@ -83,14 +90,3 @@ passport.use(
 		}
 	)
 );
-
-/*async (accessToken, refreshToken, profile, done) => {
-			const existingUser = await User.findOne({ googleId: profile.id });
-
-			if (existingUser) {
-				return done(null, existingUser);
-			}
-			const user = await new User({ googleId: profile.id }).save();
-			// user is what we get back from the db
-			done(null, user);
-		} */
