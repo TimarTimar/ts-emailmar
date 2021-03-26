@@ -9,6 +9,8 @@ import Dashboard from "./Dashboard";
 import SurveyNew from "./surveys/SurveyNew";
 import SurveyListItemEdit from "./surveys/SurveyListItemEdit";
 
+import { FormikSurveyForm } from "./surveys/formikForm/FormikSurveyForm";
+import { FormikSurveyNew } from "./surveys/formikForm/FormikSurveyNew";
 
 /*
 import { Dispatch } from "redux";
@@ -17,8 +19,7 @@ interface AppProps{
 }
 */
 
-const App:React.FC<any> = (props) => {
-
+const App: React.FC<any> = (props) => {
 	useEffect(() => {
 		props.fetchUser();
 	}, []);
@@ -30,8 +31,9 @@ const App:React.FC<any> = (props) => {
 					<Header />
 					<Route path="/" exact component={Landing} />
 					<Route path="/surveys" exact component={Dashboard} />
-					<Route path="/surveys/new" component={SurveyNew} />
+					<Route path="/surveys/new" component={FormikSurveyNew} />
 					<Route path="/edit_survey/:surveyId" component={SurveyListItemEdit} />
+					<Route path="/surveys/formik" component={FormikSurveyForm} />
 				</div>
 			</BrowserRouter>
 		</div>
