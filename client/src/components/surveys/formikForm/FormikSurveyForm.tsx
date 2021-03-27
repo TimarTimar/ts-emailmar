@@ -1,20 +1,14 @@
 import * as React from "react";
-import {
-	Formik,
-	FormikHelpers,
-	FormikProps,
-	Form,
-	Field,
-	FieldProps,
-} from "formik";
+import { Formik, Form, Field, useFormikContext } from "formik";
 
-interface MyFormValues {
-	title: string;
-	subject: string;
-	body: string;
-	participants: string;
+export interface FormikSurveyFormValues {
+	title?: string;
+	subject?: string;
+	body?: string;
+	recipients?: string;
 }
 
+/*
 const MyTextInput = ({ label, ...props }: any) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
 	// which we can spread on <input> and alse replace ErrorMessage entirely.
@@ -28,20 +22,22 @@ const MyTextInput = ({ label, ...props }: any) => {
 			) : null}
 		</>
 	);
-};
+};*/
 
 interface FormikFormSurveyProps {
 	handleSubmit: any;
-	initialValues: MyFormValues;
+	initialValues: FormikSurveyFormValues;
+	onCancel: any;
 }
 
 export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
-	const initialValues: MyFormValues = {
+	const initialValues: FormikSurveyFormValues = {
 		title: "",
 		subject: "",
 		body: "",
-		participants: "",
+		recipients: "",
 	};
+
 	return (
 		<div>
 			<h1>My Example</h1>
@@ -51,13 +47,21 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 					<Field id="subject" name="subject" placeholder="Email's Subject" />
 					<Field id="body" name="body" placeholder="Email's body" />
 					<Field
-						id="participants"
-						name="participants"
+						id="recipients"
+						name="recipients"
 						placeholder="Comma separated emails"
 					/>
-					<button className="btn" type="submit">
+					<button
+						className="btn red left"
+						onClick={props.onCancel}
+						name="cancelButton"
+					>
+						Cancel
+					</button>
+					<button className="btn pink right" type="submit" name="sendButton">
 						Submit
 					</button>
+					{props.children}
 				</Form>
 			</Formik>
 		</div>
