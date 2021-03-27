@@ -57,6 +57,12 @@ export const FormikSurveyNew = () => {
 	//state = { showFormReview: false };
 
 	const [showFormReview, setShowFormReview] = useState(false);
+	const [initValue, setInitValue] = useState({
+		title: "",
+		subject: "",
+		body: "",
+		recipients: "",
+	});
 
 	const { values } = useFormikContext() ?? {};
 	useEffect(() => {
@@ -64,23 +70,29 @@ export const FormikSurveyNew = () => {
 	}, [values]);
 
 	const renderContent = () => {
-		//	if (showFormReview) {
-		//		return <FormikFormReview onCancel={() => setShowFormReview(false)} />;
-		//	}
-		//
-		return (
-			<FormikSurveyForm
-				onCancel={(e: Event) => {
-					e.preventDefault();
-					e.stopPropagation();
-					console.log("I am cancelling");
-				}}
-				handleSubmit={(e: FormikValues) => console.log(e)}
-				initialValues={{ title: "", subject: "", body: "", recipients: "" }}
-			>
-				<FormikData />
-			</FormikSurveyForm>
-		);
+		if (showFormReview) {
+			return (
+				<div>
+					<button onClick={() => setShowFormReview(false)}>cancel</button>
+				</div>
+			);
+		} else {
+			return (
+				<FormikSurveyForm
+					onCancel={(e: Event) => {
+						e.preventDefault();
+						e.stopPropagation();
+						console.log("I am cancelling");
+					}}
+					handleSubmit={() => {
+						setShowFormReview(true);
+					}}
+					initialValues={{ title: "", subject: "", body: "", recipients: "" }}
+				>
+					<FormikData />
+				</FormikSurveyForm>
+			);
+		}
 	};
 
 	return <div>{renderContent()}</div>;
