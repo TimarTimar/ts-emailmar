@@ -1,11 +1,10 @@
-// SurveyNew shows SurveyForm and SurveyReview
+// SurveyNew shows SurveyForm and SurveyReview, you can jump back and force review and edit formvalues
 import axios from "axios";
-import { FormikValues, useFormikContext } from "formik";
-import React, { useEffect, useState } from "react";
-import { getFormInitialValues } from "redux-form";
+import { useFormikContext } from "formik";
+import React, { useState } from "react";
 import { FormikSurveyForm, FormikSurveyFormValues } from "./FormikSurveyForm";
 
-const FormikData = () => {
+const FormikButtons = () => {
 	const formik = useFormikContext();
 
 	const saveAsDraft = async (formValues: FormikSurveyFormValues | unknown) => {
@@ -33,7 +32,6 @@ const FormikData = () => {
 	return (
 		<button
 			className="btn"
-			style={{ marginLeft: "40px" }}
 			onClick={() => saveAsDraft(formik.values)}
 			type="button"
 		>
@@ -42,54 +40,64 @@ const FormikData = () => {
 	);
 };
 
-/*
-interface FormikReviewProps {
-
-}
-
-export const FormikReview: React.FC<FormikReviewProps> = ({}) => {
-		return ();
-}
-
-*/
-
 export const FormikSurveyNew = () => {
-	//state = { showFormReview: false };
-
 	const [showFormReview, setShowFormReview] = useState(false);
-	const [initValue, setInitValue] = useState({
+	const [formikFormValues, setFormikFormValues] = useState({
 		title: "",
 		subject: "",
 		body: "",
 		recipients: "",
 	});
 
-	const { values } = useFormikContext() ?? {};
-	useEffect(() => {
-		console.log(values);
-	}, [values]);
-
 	const renderContent = () => {
 		if (showFormReview) {
 			return (
 				<div>
-					<button onClick={() => setShowFormReview(false)}>cancel</button>
+					<h4>Review</h4>
+					<div>
+						<label>Emailmar Title</label>
+						<div>{formikFormValues.title}</div>
+						<label>Email's Subject</label>
+						<div>{formikFormValues.subject}</div>
+						<label>Email's body</label>
+						<div>{formikFormValues.body}</div>
+						<label>recipients</label>
+						<div>{formikFormValues.recipients}</div>
+					</div>
+					<div style={{ marginTop: "20px" }}>
+						<button
+							className="btn red left"
+							onClick={() => setShowFormReview(false)}
+						>
+							cancel
+						</button>
+						<button
+							className="btn teal right"
+							onClick={(formikFormValues) => {
+								console.log(formikFormValues);
+							}}
+						>
+							Send
+						</button>
+					</div>
 				</div>
 			);
 		} else {
 			return (
 				<FormikSurveyForm
+					formTitle={"Create Survey"}
 					onCancel={(e: Event) => {
 						e.preventDefault();
 						e.stopPropagation();
-						console.log("I am cancelling");
+						window.location.assign("/surveys");
 					}}
-					handleSubmit={() => {
+					handleSubmit={(data: FormikSurveyFormValues) => {
 						setShowFormReview(true);
+						setFormikFormValues(data);
 					}}
-					initialValues={{ title: "", subject: "", body: "", recipients: "" }}
+					initialValues={formikFormValues}
 				>
-					<FormikData />
+					<FormikButtons />
 				</FormikSurveyForm>
 			);
 		}

@@ -2,10 +2,10 @@ import * as React from "react";
 import { Formik, Form, Field, useFormikContext } from "formik";
 
 export interface FormikSurveyFormValues {
-	title?: string;
-	subject?: string;
-	body?: string;
-	recipients?: string;
+	title: string;
+	subject: string;
+	body: string;
+	recipients: string;
 }
 
 /*
@@ -28,6 +28,7 @@ interface FormikFormSurveyProps {
 	handleSubmit: any;
 	initialValues: FormikSurveyFormValues;
 	onCancel: any;
+	formTitle: string;
 }
 
 export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
@@ -40,7 +41,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 
 	return (
 		<div>
-			<h1>My Example</h1>
+			<h4>{props.formTitle}</h4>
 			<Formik initialValues={props.initialValues} onSubmit={props.handleSubmit}>
 				<Form>
 					<Field id="title" name="title" placeholder="Your Title" />
@@ -51,17 +52,27 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 						name="recipients"
 						placeholder="Comma separated emails"
 					/>
-					<button
-						className="btn red left"
-						onClick={props.onCancel}
-						name="cancelButton"
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							alignItems: "center",
+							height: "50px",
+							margin: "10px 0px",
+						}}
 					>
-						Cancel
-					</button>
-					<button className="btn pink right" type="submit" name="sendButton">
-						Submit
-					</button>
-					{props.children}
+						<button
+							className="btn red left"
+							onClick={props.onCancel}
+							name="cancelButton"
+						>
+							Cancel
+						</button>
+						{props.children}
+						<button className="btn pink right" type="submit" name="sendButton">
+							Submit
+						</button>
+					</div>
 				</Form>
 			</Formik>
 		</div>
