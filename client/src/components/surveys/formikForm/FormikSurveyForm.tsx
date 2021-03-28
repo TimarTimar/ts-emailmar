@@ -1,12 +1,6 @@
 import * as React from "react";
 import { Formik, Form, Field, useFormikContext } from "formik";
-
-export interface FormikSurveyFormValues {
-	title: string;
-	subject: string;
-	body: string;
-	recipients: string;
-}
+import { FormikSurveyFormValues } from "./types";
 
 /*
 const MyTextInput = ({ label, ...props }: any) => {
@@ -32,17 +26,14 @@ interface FormikFormSurveyProps {
 }
 
 export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
-	const initialValues: FormikSurveyFormValues = {
-		title: "",
-		subject: "",
-		body: "",
-		recipients: "",
-	};
-
 	return (
 		<div>
 			<h4>{props.formTitle}</h4>
-			<Formik initialValues={props.initialValues} onSubmit={props.handleSubmit}>
+			<Formik
+				enableReinitialize={true}
+				initialValues={props.initialValues}
+				onSubmit={props.handleSubmit}
+			>
 				<Form>
 					<Field id="title" name="title" placeholder="Your Title" />
 					<Field id="subject" name="subject" placeholder="Email's Subject" />

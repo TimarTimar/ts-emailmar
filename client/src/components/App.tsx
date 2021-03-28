@@ -10,6 +10,7 @@ import SurveyListItemEdit from "./surveys/SurveyListItemEdit";
 
 import { FormikSurveyForm } from "./surveys/formikForm/FormikSurveyForm";
 import { FormikSurveyNew } from "./surveys/formikForm/FormikSurveyNew";
+import { FormikSurveyListItemEdit } from "./surveys/formikForm/FormikSurveyListItemEdit";
 
 /*
 import { Dispatch } from "redux";
@@ -31,7 +32,10 @@ const App: React.FC<any> = (props) => {
 					<Route path="/" exact component={Landing} />
 					<Route path="/surveys" exact component={Dashboard} />
 					<Route path="/surveys/new" component={FormikSurveyNew} />
-					<Route path="/edit_survey/:surveyId" component={SurveyListItemEdit} />
+					<Route
+						path="/edit_survey/:surveyId"
+						component={FormikSurveyListItemEdit}
+					/>
 					<Route path="/surveys/formik" component={FormikSurveyForm} />
 				</div>
 			</BrowserRouter>

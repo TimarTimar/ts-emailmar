@@ -2,7 +2,8 @@
 import axios from "axios";
 import { useFormikContext } from "formik";
 import React, { useState } from "react";
-import { FormikSurveyForm, FormikSurveyFormValues } from "./FormikSurveyForm";
+import { FormikSurveyForm } from "./FormikSurveyForm";
+import { FormikSurveyFormValues } from "./types";
 
 const FormikButtons = () => {
 	const formik = useFormikContext();
