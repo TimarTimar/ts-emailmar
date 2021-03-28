@@ -1,4 +1,7 @@
+//I switched to Formik from ReduxForm, this functionality can be find in formikForm/FormikSurveyNew
+
 // SurveyNew shows SurveyForm and SurveyReview
+/*
 import React, { useState } from "react";
 import { reduxForm } from "redux-form";
 import SurveyForm from "./SurveyForm";
@@ -23,3 +26,5 @@ const SurveyNew = () => {
 export default reduxForm({
 	form: "surveyForm",
 })(SurveyNew);
+
+*/

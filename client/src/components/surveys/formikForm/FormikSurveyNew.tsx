@@ -49,6 +49,11 @@ export const FormikSurveyNew = () => {
 		recipients: "",
 	});
 
+	const sendSurvey = async (values: FormikSurveyFormValues) => {
+		await axios.post("/api/surveys", values);
+		window.location.assign("/");
+	};
+
 	const renderContent = () => {
 		if (showFormReview) {
 			return (
@@ -73,8 +78,9 @@ export const FormikSurveyNew = () => {
 						</button>
 						<button
 							className="btn teal right"
-							onClick={(formikFormValues) => {
+							onClick={() => {
 								console.log(formikFormValues);
+								sendSurvey(formikFormValues);
 							}}
 						>
 							Send

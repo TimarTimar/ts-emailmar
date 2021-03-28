@@ -1,3 +1,6 @@
+//I switched to Formik from ReduxForm, this functionality can be find in formikForm/FormikSurveyNew
+
+/*
 import _ from "lodash";
 import React from "react";
 import formFields from "./formFields";
@@ -65,3 +68,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, actions)(withRouter(SurveyFormReview));
+
+*/
