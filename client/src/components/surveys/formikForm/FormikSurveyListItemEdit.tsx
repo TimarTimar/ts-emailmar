@@ -88,7 +88,7 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 	if (isLoading === false) {
 		return (
 			<FormikSurveyForm
-				formTitle={"Create Survey"}
+				formTitle={"Edit Survey"}
 				onCancel={(e: Event) => {
 					e.preventDefault();
 					e.stopPropagation();
