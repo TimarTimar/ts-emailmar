@@ -110,6 +110,10 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 			</FormikSurveyForm>
 		);
 	} else {
-		return <div>I'm loading</div>;
+		return (
+			<div className="progress">
+				<div className="indeterminate"></div>
+			</div>
+		);
 	}
 };
