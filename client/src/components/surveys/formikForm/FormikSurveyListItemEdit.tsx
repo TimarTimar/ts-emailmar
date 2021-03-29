@@ -36,7 +36,7 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 			);
 			console.log("huuuu", data);
 			const recipients = data.recipients
-				.map((item: any) => {
+				.map((item) => {
 					return item.email;
 				})
 				.toLocaleString();
