@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import { FormikSurveyFormValues } from "./types";
+import { SurveyFormSchema } from "./SurveyFormValidation";
 
 /*
 const MyTextInput = ({ label, ...props }: any) => {
@@ -33,38 +34,65 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 				enableReinitialize={true}
 				initialValues={props.initialValues}
 				onSubmit={props.handleSubmit}
+				validationSchema={SurveyFormSchema}
 			>
-				<Form>
-					<Field id="title" name="title" placeholder="Your Title" />
-					<Field id="subject" name="subject" placeholder="Email's Subject" />
-					<Field id="body" name="body" placeholder="Email's body" />
-					<Field
-						id="recipients"
-						name="recipients"
-						placeholder="Comma separated emails"
-					/>
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "space-between",
-							alignItems: "center",
-							height: "50px",
-							margin: "10px 0px",
-						}}
-					>
-						<button
-							className="btn red left"
-							onClick={props.onCancel}
-							name="cancelButton"
+				{({ errors, touched }) => (
+					<Form>
+						<Field id="title" name="title" placeholder="Your Title" />
+						{errors.title && touched.title ? (
+							<div className={"card-panel red darken-4 white-text"}>
+								{errors.title}
+							</div>
+						) : null}
+						<Field id="subject" name="subject" placeholder="Email's Subject" />
+						{errors.subject && touched.subject ? (
+							<div className={"card-panel red darken-4 white-text"}>
+								{errors.subject}
+							</div>
+						) : null}
+						<Field id="body" name="body" placeholder="Email's body" />
+						{errors.body && touched.body ? (
+							<div className={"card-panel red darken-4 white-text"}>
+								{errors.body}
+							</div>
+						) : null}
+						<Field
+							id="recipients"
+							name="recipients"
+							placeholder="Comma separated emails"
+						/>
+						{errors.recipients && touched.recipients ? (
+							<div className={"card-panel red darken-4 white-text"}>
+								{errors.recipients}
+							</div>
+						) : null}
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+								height: "50px",
+								margin: "10px 0px",
+							}}
 						>
-							Cancel
-						</button>
-						{props.children}
-						<button className="btn pink right" type="submit" name="sendButton">
-							Submit
-						</button>
-					</div>
-				</Form>
+							<button
+								className="btn red left"
+								onClick={props.onCancel}
+								name="cancelButton"
+							>
+								Cancel
+							</button>
+							{props.children}
+							<button
+								className="btn pink right"
+								type="submit"
+								name="sendButton"
+							>
+								Submit
+							</button>
+						</div>
+					</Form>
+				)}
 			</Formik>
 		</div>
 	);
