@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useFormikContext } from "formik";
+import { FormikValues, useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { formValues } from "redux-form";
@@ -101,7 +101,8 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 				initialValues={formikFormValues}
 			>
 				<FormikButtons
-					saveAsDraft={async (data: any) => {
+					saveAsDraft={async (data: FormikSurveyFormValues) => {
+						setIsLoading(true);
 						await axios.patch(`/api/edit_survey/${surveyId}`, data);
 						window.location.assign("/surveys");
 					}}
