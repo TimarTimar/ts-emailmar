@@ -2,7 +2,7 @@ import axios from "axios";
 import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { SurveyState } from "../../../reducers/types";
+import { formValues } from "redux-form";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
 
@@ -12,10 +12,11 @@ const FormikButtons = (props: any) => {
 	console.log("PROPS:", props);
 	const formik = useFormikContext();
 
+	/*
 	const saveAsDraft = async (formValues: FormikSurveyFormValues | unknown) => {
-		await axios.post("/api/save_as_draft", formValues);
+		await axios.patch("/api/save_as_draft", formValues);
 		window.location.assign("/surveys");
-	};
+	};*/
 
 	React.useEffect(() => {
 		console.group("Formik State");
@@ -37,7 +38,7 @@ const FormikButtons = (props: any) => {
 	return (
 		<button
 			className="btn"
-			onClick={() => saveAsDraft(formik.values)}
+			onClick={() => props.saveAsDraft(formik.values)}
 			type="button"
 		>
 			Save As Draft
@@ -99,7 +100,12 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 				}}
 				initialValues={formikFormValues}
 			>
-				<FormikButtons />
+				<FormikButtons
+					saveAsDraft={async (data: any) => {
+						await axios.patch(`/api/edit_survey/${surveyId}`, data);
+						window.location.assign("/surveys");
+					}}
+				/>
 			</FormikSurveyForm>
 		);
 	} else {

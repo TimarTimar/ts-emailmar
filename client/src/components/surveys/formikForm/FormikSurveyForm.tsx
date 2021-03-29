@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Formik, Form, Field, useFormikContext } from "formik";
+import { Formik, Form, Field } from "formik";
 import { FormikSurveyFormValues } from "./types";
 
 /*
