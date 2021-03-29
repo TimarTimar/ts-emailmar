@@ -8,33 +8,13 @@ import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
 
 interface FormikSurveyListItemEditProps {}
 
-const FormikButtons = (props: any) => {
-	console.log("PROPS:", props);
-	const formik = useFormikContext();
+interface FormikChildComponentProps {
+	saveAsDraft: (values: FormikSurveyFormValues) => void;
+}
 
-	/*
-	const saveAsDraft = async (formValues: FormikSurveyFormValues | unknown) => {
-		await axios.patch("/api/save_as_draft", formValues);
-		window.location.assign("/surveys");
-	};*/
-
-	React.useEffect(() => {
-		console.group("Formik State");
-		console.log("values", formik.values);
-		console.log("errors", formik.errors);
-		console.log("touched", formik.touched);
-		console.log("isSubmitting", formik.isSubmitting);
-		console.log("isValidating", formik.isValidating);
-		console.log("submitCount", formik.submitCount);
-		console.groupEnd();
-	}, [
-		formik.values,
-		formik.errors,
-		formik.touched,
-		formik.isSubmitting,
-		formik.isValidating,
-		formik.submitCount,
-	]);
+//For getting the props
+const FormikChildComponent = (props: FormikChildComponentProps) => {
+	const formik = useFormikContext<FormikSurveyFormValues>();
 	return (
 		<button
 			className="btn"
@@ -68,7 +48,6 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 			};
 			setFormikFormValues(FormikInitialValues);
 			setIsLoading(false);
-			console.log("sajkdfhakldjlas");
 		};
 		main();
 	}, []);
@@ -100,10 +79,10 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 				}}
 				initialValues={formikFormValues}
 			>
-				<FormikButtons
-					saveAsDraft={async (data: FormikSurveyFormValues) => {
+				<FormikChildComponent
+					saveAsDraft={async (values) => {
 						setIsLoading(true);
-						await axios.patch(`/api/edit_survey/${surveyId}`, data);
+						await axios.patch(`/api/edit_survey/${surveyId}`, values);
 						window.location.assign("/surveys");
 					}}
 				/>
