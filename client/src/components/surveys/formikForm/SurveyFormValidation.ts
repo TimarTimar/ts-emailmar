@@ -14,6 +14,7 @@ export const SurveyFormSchema = Yup.object().shape({
 		.max(50, "Too Long!")
 		.required("Required"),
 	recipients: Yup.array()
+		.required("Required")
 		.transform(function (value, originalValue) {
 			if (this.isType(value) && value !== null) {
 				return value;

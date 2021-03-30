@@ -3,6 +3,7 @@ import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { FormikSurveyForm } from "./FormikSurveyForm";
+import { sendSurvey } from "./surveyRoutes";
 import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
 
 interface FormikSurveyListItemEditProps {}
@@ -58,12 +59,6 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 		recipients: "",
 	});
 
-	const sendSurvey = async (values: FormikSurveyFormValues) => {
-		setIsLoading(true);
-		await axios.patch(`/api/send_survey/${surveyId}`, values);
-		window.location.assign("/surveys");
-	};
-
 	if (isLoading === false) {
 		return (
 			<FormikSurveyForm
@@ -74,7 +69,7 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 					window.location.assign("/surveys");
 				}}
 				handleSubmit={(data: FormikSurveyFormValues) => {
-					sendSurvey(data);
+					sendSurvey(data, setIsLoading, surveyId);
 				}}
 				initialValues={formikFormValues}
 			>
