@@ -3,22 +3,6 @@ import { Formik, Form, Field } from "formik";
 import { FormikSurveyFormValues } from "./types";
 import { SurveyFormSchema } from "./SurveyFormValidation";
 
-/*
-const MyTextInput = ({ label, ...props }: any) => {
-	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-	// which we can spread on <input> and alse replace ErrorMessage entirely.
-	const [field, meta] = useField(props);
-	return (
-		<>
-			<label htmlFor={props.id || props.name}>{label}</label>
-			<input className="text-input" {...field} {...props} />
-			{meta.touched && meta.error ? (
-				<div className="error">{meta.error}</div>
-			) : null}
-		</>
-	);
-};*/
-
 interface FormikFormSurveyProps {
 	handleSubmit: any;
 	initialValues: FormikSurveyFormValues;
@@ -97,6 +81,3 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 		</div>
 	);
 };
-function useField(props: { [x: string]: any }): [any, any] {
-	throw new Error("Function not implemented.");
-}

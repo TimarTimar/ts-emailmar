@@ -2,8 +2,8 @@ import _ from "lodash";
 import { Path } from "path-parser";
 import { URL } from "url";
 
-const requireLogin = require ('../middlewares/requireLogin');
-const requireCredits = require('../middlewares/requireCredits');
+const requireLogin = require("../middlewares/requireLogin");
+const requireCredits = require("../middlewares/requireCredits");
 import Mailer from "../services/Mailer";
 import surveyTemplate from "../services/emailTemplates/surveyTemplate";
 
@@ -11,14 +11,16 @@ import surveyTemplate from "../services/emailTemplates/surveyTemplate";
 import { Survey } from "../models/Survey";
 import { Express } from "express";
 
-module.exports = (app:Express) => {
+module.exports = (app: Express) => {
 	app.all("/api/delete_survey/:surveyId", requireLogin, async (req, res) => {
 		const surveyId = req.param("surveyId");
-		await Survey.findByIdAndRemove(surveyId).catch((error) => console.log(error));
+		await Survey.findByIdAndRemove(surveyId).catch((error) =>
+			console.log(error)
+		);
 		res.redirect("/surveys");
 	});
 
-	app.get("/api/surveys", requireLogin, async (req:any, res) => {
+	app.get("/api/surveys", requireLogin, async (req: any, res) => {
 		const surveys = await Survey.find({ _user: req.user.id }).select({
 			recipients: false,
 		});
@@ -70,7 +72,7 @@ module.exports = (app:Express) => {
 		res.send(response);
 	});
 
-	app.post("/api/save_as_draft", requireLogin, async (req:any, res, next) => {
+	app.post("/api/save_as_draft", requireLogin, async (req: any, res, next) => {
 		const { title, subject, body, recipients } = req.body;
 
 		const survey = new Survey({
@@ -79,7 +81,7 @@ module.exports = (app:Express) => {
 			body,
 			recipients: recipients
 				.split(",")
-				.map((email:any) => ({ email: email.trim() })),
+				.map((email: any) => ({ email: email.trim() })),
 			_user: req.user.id,
 		});
 
@@ -112,7 +114,7 @@ module.exports = (app:Express) => {
 		"/api/send_survey/:surveyId",
 		requireLogin,
 		requireCredits,
-		async (req:any, res) => {
+		async (req: any, res) => {
 			const surveyId = req.param("surveyId");
 			const filter = { _id: surveyId };
 			const { title, subject, body, recipients } = req.body;
@@ -128,18 +130,19 @@ module.exports = (app:Express) => {
 				new: true,
 			});
 
-			if (response){
+			if (response) {
 				const mailer = new Mailer(response, surveyTemplate(response));
 				try {
 					await mailer.send();
 					req.user.credits -= 1;
 					const user = await req.user.save();
+					res.send(user);
 				} catch (err) {
 					res.status(422).send(err);
 				}
-			}else{
-				return
-			}			
+			} else {
+				return;
+			}
 		}
 	);
 
@@ -147,55 +150,60 @@ module.exports = (app:Express) => {
 		"/api/quick_send_survey/:surveyId",
 		requireLogin,
 		requireCredits,
-		async (req:any, res) => {
+		async (req: any, res) => {
 			const surveyId = req.param("surveyId");
 			const filter = { _id: surveyId };
 			const update = { state: "sent", dateSent: Date.now() };
 			const response = await Survey.findOneAndUpdate(filter, update);
 
 			//attempt to Send
-			if (response){
+			if (response) {
 				const mailer = new Mailer(response, surveyTemplate(response));
-			try {
-				await mailer.send();
-				req.user.credits -= 1;
-				const user = await req.user.save();
-				res.redirect("/surveys");
-			} catch (err) {
-				res.status(422).send(err);
-			}
-			}else{
-				return
+				try {
+					await mailer.send();
+					req.user.credits -= 1;
+					const user = await req.user.save();
+					res.redirect("/surveys");
+				} catch (err) {
+					res.status(422).send(err);
+				}
+			} else {
+				return;
 			}
 		}
 	);
 
-	app.post("/api/surveys", requireLogin, requireCredits, async (req:any, res) => {
-		const { title, subject, body, recipients } = req.body;
+	app.post(
+		"/api/surveys",
+		requireLogin,
+		requireCredits,
+		async (req: any, res) => {
+			const { title, subject, body, recipients } = req.body;
 
-		const survey = new Survey({
-			title,
-			subject,
-			body,
-			recipients: recipients
-				.split(",")
-				.map((email:string) => ({ email: email.trim() })),
-			_user: req.user.id,
-			state: "sent",
-			dateSent: Date.now(),
-		});
+			const survey = new Survey({
+				title,
+				subject,
+				body,
+				recipients: recipients
+					.split(",")
+					.map((email: string) => ({ email: email.trim() })),
+				_user: req.user.id,
+				state: "sent",
+				dateSent: Date.now(),
+			});
 
-		//attempt to Send
-		const mailer = new Mailer(survey, surveyTemplate(survey));
+			//attempt to Send
+			const mailer = new Mailer(survey, surveyTemplate(survey));
 
-		try {
-			await mailer.send();
-			await survey.save();
-			req.user.credits -= 1;
-			const user = await req.user.save();
-			res.send(user);
-		} catch (err) {
-			res.status(422).send(err);
+			try {
+				await mailer.send();
+				await survey.save();
+				req.user.credits -= 1;
+				const user = await req.user.save();
+				res.send(user);
+			} catch (err) {
+				res.status(422).send(err);
+			}
 		}
-	});
+	);
 };

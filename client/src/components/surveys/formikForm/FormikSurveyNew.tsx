@@ -13,7 +13,7 @@ const FormikButtons = () => {
 		window.location.assign("/surveys");
 	};
 
-	React.useEffect(() => {
+	/*React.useEffect(() => {
 		console.group("Formik State");
 		console.log("values", formik.values);
 		console.log("errors", formik.errors);
@@ -29,7 +29,7 @@ const FormikButtons = () => {
 		formik.isSubmitting,
 		formik.isValidating,
 		formik.submitCount,
-	]);
+	]);*/
 	return (
 		<button
 			className="btn"
@@ -52,7 +52,7 @@ export const FormikSurveyNew = () => {
 
 	const sendSurvey = async (values: FormikSurveyFormValues) => {
 		await axios.post("/api/surveys", values);
-		window.location.assign("/");
+		window.location.assign("/surveys");
 	};
 
 	const renderContent = () => {

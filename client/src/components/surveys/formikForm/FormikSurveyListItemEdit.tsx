@@ -1,8 +1,7 @@
 import axios from "axios";
-import { FormikValues, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { formValues } from "redux-form";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
 
@@ -34,7 +33,6 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 			const { data }: FetchSurveyResponseData = await axios.get(
 				`/api/fetch_survey/${surveyId}`
 			);
-			console.log("huuuu", data);
 			const recipients = data.recipients
 				.map((item) => {
 					return item.email;
@@ -61,8 +59,9 @@ export const FormikSurveyListItemEdit: React.FC<FormikSurveyListItemEditProps> =
 	});
 
 	const sendSurvey = async (values: FormikSurveyFormValues) => {
-		await axios.post("/api/surveys", values);
-		window.location.assign("/");
+		setIsLoading(true);
+		await axios.patch(`/api/send_survey/${surveyId}`, values);
+		window.location.assign("/surveys");
 	};
 
 	if (isLoading === false) {
