@@ -11,6 +11,12 @@ interface FormikFormSurveyProps {
 }
 
 export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
+	const SurveyFormFieldsList = [
+		"title",
+		"subject",
+		"body",
+		"recipients",
+	] as const;
 	return (
 		<div>
 			<h4>{props.formTitle}</h4>
@@ -22,34 +28,28 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 			>
 				{({ errors, touched }) => (
 					<Form>
-						<Field id="title" name="title" placeholder="Your Title" />
-						{errors.title && touched.title ? (
-							<div className={"card-panel red darken-4 white-text"}>
-								{errors.title}
-							</div>
-						) : null}
-						<Field id="subject" name="subject" placeholder="Email's Subject" />
-						{errors.subject && touched.subject ? (
-							<div className={"card-panel red darken-4 white-text"}>
-								{errors.subject}
-							</div>
-						) : null}
-						<Field id="body" name="body" placeholder="Email's body" />
-						{errors.body && touched.body ? (
-							<div className={"card-panel red darken-4 white-text"}>
-								{errors.body}
-							</div>
-						) : null}
-						<Field
-							id="recipients"
-							name="recipients"
-							placeholder="Comma separated emails"
-						/>
-						{errors.recipients && touched.recipients ? (
-							<div className={"card-panel red darken-4 white-text"}>
-								{errors.recipients}
-							</div>
-						) : null}
+						{SurveyFormFieldsList.map((item) => {
+							return (
+								<div>
+									<Field
+										id={item}
+										name={item}
+										placeholder={
+											item === "recipients"
+												? "Comma separated emails"
+												: `Your email's ${item}`
+										}
+									/>
+									<span>
+										{errors[item] && touched[item] ? (
+											<div className={"card-panel red darken-2 white-text"}>
+												{errors[item]}
+											</div>
+										) : null}
+									</span>
+								</div>
+							);
+						})}
 						<div
 							style={{
 								display: "flex",
