@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import React, { useState } from "react";
 import { tw } from "../../TwClasses";
 import { FormikSurveyForm } from "./FormikSurveyForm";
-import { FormikSurveyFormValues } from "./types";
+import { FormikSurveyFormValues, SurveyFormFieldsList } from "./types";
 
 const FormikButtons = () => {
 	const formik = useFormikContext();
@@ -60,26 +60,27 @@ export const FormikSurveyNew = () => {
 		if (showFormReview) {
 			return (
 				<div>
-					<h4>Review</h4>
+					<h4 className={tw.h4}>Review</h4>
 					<div>
-						<label>Emailmar Title</label>
-						<div>{formikFormValues.title}</div>
-						<label>Email's Subject</label>
-						<div>{formikFormValues.subject}</div>
-						<label>Email's body</label>
-						<div>{formikFormValues.body}</div>
-						<label>recipients</label>
-						<div>{formikFormValues.recipients}</div>
+						{SurveyFormFieldsList.map((item) => {
+							return (
+								<div key={item} className="p-2 text-gray-500">
+									<label>{`Email's ${item}: `}</label>
+									<div>{formikFormValues[item]}</div>
+									<hr />
+								</div>
+							);
+						})}
 					</div>
-					<div style={{ marginTop: "20px" }}>
+					<div className="flex justify-between my-3.5">
 						<button
-							className="btn red left"
+							className={tw.button.white}
 							onClick={() => setShowFormReview(false)}
 						>
-							cancel
+							Cancel
 						</button>
 						<button
-							className="btn teal right"
+							className={tw.button.white}
 							onClick={() => {
 								console.log(formikFormValues);
 								sendSurvey(formikFormValues);

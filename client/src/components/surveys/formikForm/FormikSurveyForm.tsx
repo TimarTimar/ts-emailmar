@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Formik, Form, Field } from "formik";
-import { FormikSurveyFormValues } from "./types";
+import { FormikSurveyFormValues, SurveyFormFieldsList } from "./types";
 import { SurveyFormSchema } from "./SurveyFormValidation";
 import { tw } from "../../TwClasses";
 
@@ -12,17 +12,9 @@ interface FormikFormSurveyProps {
 }
 
 export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
-	const SurveyFormFieldsList = [
-		"title",
-		"subject",
-		"body",
-		"recipients",
-	] as const;
 	return (
 		<div>
-			<h4 className="text-xl text-center p-2 text-gray-300">
-				{props.formTitle}
-			</h4>
+			<h4 className={tw.h4}>{props.formTitle}</h4>
 			<Formik
 				enableReinitialize={true}
 				initialValues={props.initialValues}

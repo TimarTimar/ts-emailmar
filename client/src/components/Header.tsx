@@ -25,7 +25,9 @@ const Header = () => {
 						Credits: {auth.credits}
 					</li>,
 					<li key="2" className="pr-4">
-						<a href="/api/logout">Logout</a>
+						<a className="hover:text-green-200" href="/api/logout">
+							Logout
+						</a>
 					</li>,
 				];
 		}
@@ -33,7 +35,7 @@ const Header = () => {
 
 	return (
 		<div>
-			<nav className="flex justify-between mx-auto mb-0.5 bg-blue-300 border-gray-400 hover:shadow-inner">
+			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner text-white h-10 pt-2 my-0.5">
 				<div className="pl-4 pr-4">
 					<Link
 						className="text-lg hover:text-green-200"

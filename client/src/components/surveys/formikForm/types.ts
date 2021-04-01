@@ -19,3 +19,10 @@ export interface FetchSurveyResponseData {
 		_user: string;
 	};
 }
+
+export const SurveyFormFieldsList = [
+	"title",
+	"subject",
+	"body",
+	"recipients",
+] as const;

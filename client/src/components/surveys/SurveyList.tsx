@@ -34,7 +34,7 @@ const SurveyList = () => {
 			<div className="h-14">
 				<select
 					id="dropdown"
-					className="h-14 flex"
+					className="h-14 flex min-w-full hover:shadow-inner border-solid border border-gray-200"
 					value={filter}
 					onChange={(e) => setFilter(e.target.value)}
 				>
