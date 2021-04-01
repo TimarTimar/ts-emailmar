@@ -18,13 +18,13 @@ const Header = () => {
 				);
 			default:
 				return [
-					<li key="1">
+					<li key="1" className="pr-4">
 						<Payments />
 					</li>,
-					<li key="3" style={{ margin: "0 15px" }}>
+					<li key="3" className="pr-4">
 						Credits: {auth.credits}
 					</li>,
-					<li key="2">
+					<li key="2" className="pr-4">
 						<a href="/api/logout">Logout</a>
 					</li>,
 				];
@@ -35,9 +35,14 @@ const Header = () => {
 		<div>
 			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner">
 				<div className="pl-4">
-					<Link to={auth ? "/surveys" : "/"}>Emailmar</Link>
+					<Link
+						className="text-lg hover:text-green-200"
+						to={auth ? "/surveys" : "/"}
+					>
+						Emailmar
+					</Link>
 				</div>
-				<ul className="flex pr-4">{renderContent()}</ul>
+				<ul className="flex">{renderContent()}</ul>
 			</nav>
 		</div>
 	);

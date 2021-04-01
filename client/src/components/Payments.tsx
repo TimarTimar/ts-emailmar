@@ -11,9 +11,15 @@ const Payments = () => {
 			description="$5 for 5 email credits"
 			amount={500}
 			token={(token) => dispatch(handleToken(token))} // submit callback
-			stripeKey={process.env.REACT_APP_STRIPE_KEY?process.env.REACT_APP_STRIPE_KEY:'Stripe Key Not Provided'}
+			stripeKey={
+				process.env.REACT_APP_STRIPE_KEY
+					? process.env.REACT_APP_STRIPE_KEY
+					: "Stripe Key Not Provided"
+			}
 		>
-			<button className="btn">Add Credits</button>
+			<button className="bg-white text-gray-400 rounded pr-6 pl-6 hover:bg-green-200 box-border">
+				Add Credits
+			</button>
 		</StripeCheckout>
 	);
 };
