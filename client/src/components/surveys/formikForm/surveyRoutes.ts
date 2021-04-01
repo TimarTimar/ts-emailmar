@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FormikSurveyFormValues } from "./types";
 
-// Sending survey after editing
+// edit and sand survey (byId)
 export const sendSurvey = async (
 	values: FormikSurveyFormValues,
 	setIsLoading: (value: React.SetStateAction<boolean>) => void,
@@ -12,7 +12,7 @@ export const sendSurvey = async (
 	window.location.assign("/surveys");
 };
 
-//Saving survey as draft after editing
+//Edit and save as draft (byId)
 export const saveAsDraft = async (
 	values: any,
 	setIsLoading: (value: React.SetStateAction<boolean>) => void,
@@ -22,3 +22,11 @@ export const saveAsDraft = async (
 	await axios.patch(`/api/edit_survey/${surveyId}`, values);
 	window.location.assign("/surveys");
 };
+
+//DeleteSurvey (byId)
+
+//Create And Save as Draft
+
+//Create and Send (And Save)
+
+//QuickSend from ListView (And Save)

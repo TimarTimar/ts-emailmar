@@ -30,7 +30,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 					<Form>
 						{SurveyFormFieldsList.map((item) => {
 							return (
-								<div>
+								<div key={item}>
 									<Field
 										id={item}
 										name={item}
