@@ -29,6 +29,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 									<Field
 										id={item}
 										name={item}
+										className="w-full"
 										placeholder={
 											item === "recipients"
 												? "Comma separated emails"
