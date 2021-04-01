@@ -5,7 +5,7 @@ import { RootState } from "../reducers";
 import Payments from "./Payments";
 
 const Header = () => {
-	const auth = useSelector((state:RootState) => state.auth);
+	const auth = useSelector((state: RootState) => state.auth);
 	const renderContent = () => {
 		switch (auth) {
 			case null:
@@ -33,20 +33,12 @@ const Header = () => {
 
 	return (
 		<div>
-			<nav>
-				<div className="nav-wrapper blue-grey">
-					<Link to={auth ? "/surveys" : "/"} className="left brand-logo">
-						<i className="material-icons">dashboard</i>Emailmar
-					</Link>
-					<a href="#" data-target="mobile" className="sidenav-trigger right">
-						<i className="material-icons">menu</i>
-					</a>
-					<ul className="right hide-on-med-and-down">{renderContent()}</ul>
+			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner">
+				<div className="pl-4">
+					<Link to={auth ? "/surveys" : "/"}>Emailmar</Link>
 				</div>
+				<ul className="flex pr-4">{renderContent()}</ul>
 			</nav>
-			<ul className="sidenav" id="mobile">
-				{renderContent()}
-			</ul>
 		</div>
 	);
 };
