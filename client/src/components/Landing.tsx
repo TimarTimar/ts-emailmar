@@ -11,7 +11,7 @@ const Landing = () => {
 			<div className="card horizontal">
 				<div className="card-stacked">
 					<div className="card-content">
-						<p>Create and Send micro-surveys to your team.</p>
+						<p>Create and Send micro-surveys to your team. Let's Gooooooo</p>
 					</div>
 					<div className="card-action">
 						{auth ? (

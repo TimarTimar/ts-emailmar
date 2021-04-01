@@ -12,7 +12,7 @@ const Header = () => {
 				return;
 			case false:
 				return (
-					<li>
+					<li className="underline">
 						<a href="/auth/google">Login with Google</a>
 					</li>
 				);
@@ -35,8 +35,8 @@ const Header = () => {
 
 	return (
 		<div>
-			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner text-white h-10 pt-2 my-0.5">
-				<div className="pl-4 pr-4">
+			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner text-white h-10 pt-2 my-0.5 rounded-md pl-4 pr-4">
+				<div>
 					<Link
 						className="text-lg hover:text-green-200"
 						to={auth ? "/surveys" : "/"}

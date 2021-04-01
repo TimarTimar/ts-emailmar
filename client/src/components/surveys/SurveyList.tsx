@@ -31,7 +31,7 @@ const SurveyList = () => {
 
 	const renderFilterSelection = () => {
 		return (
-			<div className="h-14">
+			<div className="h-14 my-1.5">
 				<select
 					id="dropdown"
 					className="h-14 flex min-w-full hover:shadow-inner border-solid border border-gray-200"

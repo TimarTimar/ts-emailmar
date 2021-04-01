@@ -56,7 +56,7 @@ const SurveyListItem = ({
 					" flex justify-between relative rounded p-2 mt-1.5 border-gray-200 border-2 transition-shadow text-white"
 				)}`}
 			>
-				<div className="h-32 w-auto">
+				<div className="h-32 max-w-4xl">
 					<span className="text-xl underline">{title}</span>
 					<p>{body}</p>
 					<p>
