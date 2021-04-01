@@ -24,7 +24,7 @@ const App: React.FC<any> = (props) => {
 	return (
 		<div className="flex justify-center">
 			<BrowserRouter>
-				<div className="max-w-7xl min-w-max">
+				<div className="max-w-5xl min-w-max">
 					<Header />
 					<Route path="/" exact component={Landing} />
 					<Route path="/surveys" exact component={Dashboard} />

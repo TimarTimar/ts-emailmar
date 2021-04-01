@@ -13,7 +13,9 @@ const Header = () => {
 			case false:
 				return (
 					<li className="underline">
-						<a href="/auth/google">Login with Google</a>
+						<a className="hover:text-green-200" href="/auth/google">
+							Login with Google
+						</a>
 					</li>
 				);
 			default:
@@ -35,7 +37,7 @@ const Header = () => {
 
 	return (
 		<div>
-			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner text-white h-10 pt-2 my-0.5 rounded-md pl-4 pr-4">
+			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner text-white h-10 pt-2 my-0.5 rounded-md pl-4 pr-4 max-w-6xl sm:px-6">
 				<div>
 					<Link
 						className="text-lg hover:text-green-200"
