@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSurveys } from "../../actions/index";
-import {SurveyState } from "../../reducers/types";
+import { SurveyState } from "../../reducers/types";
 import SurveyListItem from "./SurveyListItem";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { tw } from "../TwClasses";
 
 const SurveyList = () => {
 	const dispatch = useDispatch();
-	const surveys = useSelector((state:SurveyState) => state.surveys);
+	const surveys = useSelector((state: SurveyState) => state.surveys);
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedSurvey, setSelectedSurvey] = useState("");
 	const [sorting, setSorting] = useState("asc");
 	const [filter, setFilter] = useState("sent-draft");
 
-	const showModal = (id:string)=>{
+	const showModal = (id: string) => {
 		setIsOpen(true);
 		setSelectedSurvey(id);
 	};
@@ -29,9 +31,10 @@ const SurveyList = () => {
 
 	const renderFilterSelection = () => {
 		return (
-			<div>
+			<div className="h-14">
 				<select
-					className="browser-default"
+					id="dropdown"
+					className="h-14 flex"
 					value={filter}
 					onChange={(e) => setFilter(e.target.value)}
 				>
@@ -44,24 +47,17 @@ const SurveyList = () => {
 	};
 	const renderOrderByDateButton = () => {
 		return (
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					height: "50px",
-				}}
-			>
+			<div className="flex justify-center items-center h-14">
 				<button
-					className="btn center"
+					className="bg-green-600 rounded p-4 text-white"
 					onClick={() => {
 						sorting === "asc" ? setSorting("desc") : setSorting("asc");
 					}}
 				>
-					Order by Date
-					<i className="material-icons">
-						{sorting === "asc" ? "arrow_upward" : "arrow_downward"}
-					</i>
+					<span className="flex">
+						<span className="pr-2">Order By Date</span>{" "}
+						{sorting === "asc" ? <FaArrowUp /> : <FaArrowDown />}
+					</span>
 				</button>
 			</div>
 		);
