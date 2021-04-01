@@ -2,6 +2,7 @@ import axios from "axios";
 import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { tw } from "../../TwClasses";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { sendSurvey } from "./surveyRoutes";
 import { FetchSurveyResponseData, FormikSurveyFormValues } from "./types";
@@ -17,7 +18,7 @@ const FormikChildComponent = (props: FormikChildComponentProps) => {
 	const formik = useFormikContext<FormikSurveyFormValues>();
 	return (
 		<button
-			className="btn"
+			className={tw.button.white}
 			onClick={() => props.saveAsDraft(formik.values)}
 			type="button"
 		>

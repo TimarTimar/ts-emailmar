@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useFormikContext } from "formik";
 import React, { useState } from "react";
+import { tw } from "../../TwClasses";
 import { FormikSurveyForm } from "./FormikSurveyForm";
 import { FormikSurveyFormValues } from "./types";
 
@@ -32,7 +33,7 @@ const FormikButtons = () => {
 	]);*/
 	return (
 		<button
-			className="btn"
+			className={tw.button.white}
 			onClick={() => saveAsDraft(formik.values)}
 			type="button"
 		>

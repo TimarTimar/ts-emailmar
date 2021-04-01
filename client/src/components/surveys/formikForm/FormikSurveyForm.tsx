@@ -2,6 +2,7 @@ import * as React from "react";
 import { Formik, Form, Field } from "formik";
 import { FormikSurveyFormValues } from "./types";
 import { SurveyFormSchema } from "./SurveyFormValidation";
+import { tw } from "../../TwClasses";
 
 interface FormikFormSurveyProps {
 	handleSubmit: any;
@@ -19,7 +20,9 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 	] as const;
 	return (
 		<div>
-			<h4>{props.formTitle}</h4>
+			<h4 className="text-xl text-center p-2 text-gray-300">
+				{props.formTitle}
+			</h4>
 			<Formik
 				enableReinitialize={true}
 				initialValues={props.initialValues}
@@ -30,7 +33,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 					<Form>
 						{SurveyFormFieldsList.map((item) => {
 							return (
-								<div key={item}>
+								<div key={item} className="p-2">
 									<Field
 										id={item}
 										name={item}
@@ -42,25 +45,15 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 									/>
 									<span>
 										{errors[item] && touched[item] ? (
-											<div className={"card-panel red darken-2 white-text"}>
-												{errors[item]}
-											</div>
+											<div className="text-red-400">{errors[item]}</div>
 										) : null}
 									</span>
 								</div>
 							);
 						})}
-						<div
-							style={{
-								display: "flex",
-								justifyContent: "space-between",
-								alignItems: "center",
-								height: "50px",
-								margin: "10px 0px",
-							}}
-						>
+						<div className="flex justify-between items-center h-14 my-2.5">
 							<button
-								className="btn red left"
+								className={tw.button.white}
 								onClick={props.onCancel}
 								name="cancelButton"
 							>
@@ -68,7 +61,7 @@ export const FormikSurveyForm: React.FC<FormikFormSurveyProps> = (props) => {
 							</button>
 							{props.children}
 							<button
-								className="btn pink right"
+								className={tw.button.white}
 								type="submit"
 								name="sendButton"
 							>
