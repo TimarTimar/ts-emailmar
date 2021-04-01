@@ -8,7 +8,7 @@ const MODAL_STYLES: CSSProperties = {
 	left: "50%",
 	transform: "translate(-50%, -50%)",
 	backgroundColor: "#FFF",
-	border: "5px solid rgba(167, 243, 20, 0.7)",
+	border: "5px solid rgba(5, 150, 105)",
 	borderRadius: "2%",
 	padding: "50px",
 	zIndex: 1000,

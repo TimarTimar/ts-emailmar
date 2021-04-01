@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Survey } from "../../reducers/types";
 import { tw } from "../TwClasses";
+import { FaEnvelopeOpen, FaEnvelope } from "react-icons/fa";
 
 export interface SurveyWithModalAndFilter extends Survey {
 	showModal: (id: string) => void;
@@ -38,34 +39,37 @@ const SurveyListItem = ({
 						Edit
 					</Link>
 				) : null,
-			cardBgColor: state === "draft" ? "purple" : "blue-grey",
-			stateIconName: state === "draft" ? "drafts" : "email",
+			cardBgColor: state === "draft" ? "bg-blue-300" : "bg-green-600",
+			stateIcon:
+				state === "draft" ? (
+					<FaEnvelopeOpen className="text-5xl" />
+				) : (
+					<FaEnvelope className="text-5xl" />
+				),
 		};
 	};
 
 	return (
-		<div
-			className={`card ${
-				conditionalDraftRendering(_id, state).cardBgColor
-			} darken-1`}
-		>
-			<div className="card-content white-text">
-				<span className="card-title">
-					{title}{" "}
-					<i className="medium material-icons right">
-						{conditionalDraftRendering(_id, state).stateIconName}
-					</i>
-				</span>
-				<p>{body}</p>
-				<p>
-					Sent on:{" "}
-					{dateSent ? new Date(dateSent).toLocaleDateString("ko-KR") : "-"}
-				</p>
-				<h5>
-					Yes: {yes} No: {no}
-				</h5>
+		<div className="rounded-md p-2">
+			<div
+				className={`${conditionalDraftRendering(_id, state).cardBgColor.concat(
+					" flex justify-between relative rounded p-2 mt-1.5 border-gray-200 border-2 transition-shadow text-white"
+				)}`}
+			>
+				<div className="h-32 w-auto">
+					<span className="text-xl underline">{title}</span>
+					<p>{body}</p>
+					<p>
+						Sent on:{" "}
+						{dateSent ? new Date(dateSent).toLocaleDateString("ko-KR") : "-"}
+					</p>
+					<h5>
+						Yes: {yes} No: {no}
+					</h5>
+				</div>
+				<div>{conditionalDraftRendering(_id, state).stateIcon}</div>
 			</div>
-			<div className="flex justify-end items-center h-12 my-2.5 pr-4">
+			<div className="flex justify-end items-center h-12 mb-2.5 pr-4 border-gray-400 bg-gray-100">
 				{conditionalDraftRendering(_id, state).renderEditButton}
 				{conditionalDraftRendering(_id, state).renderSendButton}
 				<button

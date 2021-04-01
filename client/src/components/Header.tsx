@@ -33,8 +33,8 @@ const Header = () => {
 
 	return (
 		<div>
-			<nav className="flex justify-between mx-auto bg-blue-300 border-gray-400 hover:shadow-inner">
-				<div className="pl-4">
+			<nav className="flex justify-between mx-auto mb-0.5 bg-blue-300 border-gray-400 hover:shadow-inner">
+				<div className="pl-4 pr-4">
 					<Link
 						className="text-lg hover:text-green-200"
 						to={auth ? "/surveys" : "/"}
