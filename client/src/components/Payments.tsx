@@ -18,7 +18,7 @@ const Payments = () => {
 					: "Stripe Key Not Provided"
 			}
 		>
-			<button className={tw.button}>Add Credits</button>
+			<button className={tw.button.white}>Add Credits</button>
 		</StripeCheckout>
 	);
 };

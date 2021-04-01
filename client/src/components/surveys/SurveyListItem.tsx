@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {Survey} from '../../reducers/types';
+import { Survey } from "../../reducers/types";
+import { tw } from "../TwClasses";
 
-export interface SurveyWithModalAndFilter extends Survey{
-	showModal:(id:string)=>void
-	filter:string
-	}
+export interface SurveyWithModalAndFilter extends Survey {
+	showModal: (id: string) => void;
+	filter: string;
+}
 
 const SurveyListItem = ({
 	_id,
@@ -16,18 +17,24 @@ const SurveyListItem = ({
 	yes,
 	no,
 	showModal,
-}:SurveyWithModalAndFilter) => {
-	const conditionalDraftRendering = (_id:string, state:"sent" | "draft") => {
+}: SurveyWithModalAndFilter) => {
+	const conditionalDraftRendering = (_id: string, state: "sent" | "draft") => {
 		return {
 			renderSendButton:
 				state === "draft" ? (
-					<a className="btn red" href={`/api/quick_send_survey/${_id}`}>
+					<a
+						className={tw.button.white.toString().concat(" p-2 mx-1.5")}
+						href={`/api/quick_send_survey/${_id}`}
+					>
 						Quick Send
 					</a>
 				) : null,
 			renderEditButton:
 				state === "draft" ? (
-					<Link to={`/edit_survey/${_id}`} className="yellow btn darken-4">
+					<Link
+						to={`/edit_survey/${_id}`}
+						className={tw.button.white.toString().concat(" p-2")}
+					>
 						Edit
 					</Link>
 				) : null,
@@ -58,19 +65,13 @@ const SurveyListItem = ({
 					Yes: {yes} No: {no}
 				</h5>
 			</div>
-			<div
-				className="card-action"
-				style={{
-					display: "flex",
-					justifyContent: "flex-end",
-					alignItems: "center",
-					height: "50px",
-					margin: "10px 0px",
-				}}
-			>
+			<div className="flex justify-end items-center h-12 my-2.5 pr-4">
 				{conditionalDraftRendering(_id, state).renderEditButton}
 				{conditionalDraftRendering(_id, state).renderSendButton}
-				<button className="btn right" onClick={() => showModal(_id)}>
+				<button
+					className={tw.button.white.toString().concat(" p-2")}
+					onClick={() => showModal(_id)}
+				>
 					Delete
 				</button>
 			</div>

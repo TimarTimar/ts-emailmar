@@ -44,10 +44,10 @@ export default function Modal({
 			<div style={MODAL_STYLES}>
 				<div className="text-center p-4">{children}</div>
 				<div className="flex justify-between my-3.5">
-					<button className={tw.button} onClick={onClose}>
+					<button className={tw.button.white} onClick={onClose}>
 						Cancel
 					</button>
-					<a className={tw.button} href={handleConfirm}>
+					<a className={tw.button.white} href={handleConfirm}>
 						Confirm
 					</a>
 				</div>
