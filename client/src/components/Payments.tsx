@@ -2,6 +2,7 @@ import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { connect, useDispatch } from "react-redux";
 import { handleToken } from "../actions";
+import { tw } from "./TwClasses";
 
 const Payments = () => {
 	const dispatch = useDispatch();
@@ -17,9 +18,7 @@ const Payments = () => {
 					: "Stripe Key Not Provided"
 			}
 		>
-			<button className="bg-white text-gray-400 rounded pr-6 pl-6 hover:bg-green-200 box-border">
-				Add Credits
-			</button>
+			<button className={tw.button}>Add Credits</button>
 		</StripeCheckout>
 	);
 };

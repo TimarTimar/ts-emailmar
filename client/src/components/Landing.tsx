@@ -1,14 +1,13 @@
 import React from "react";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "../reducers";
 
-
 const Landing = () => {
-	const auth = useSelector((state:RootState) => state.auth)
+	const auth = useSelector((state: RootState) => state.auth);
 	return (
 		<div>
-			<h2 className="header">Welcome</h2>
+			<h1>Welcome</h1>
 			<div className="card horizontal">
 				<div className="card-stacked">
 					<div className="card-content">
@@ -26,6 +25,5 @@ const Landing = () => {
 		</div>
 	);
 };
-
 
 export default Landing;
